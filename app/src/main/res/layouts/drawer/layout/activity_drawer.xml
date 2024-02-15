@@ -23,7 +23,7 @@
             <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:background="@color/green"
+                android:background="@color/green800"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
         </com.google.android.material.appbar.AppBarLayout>
@@ -35,7 +35,6 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
 
-
     <!-- Drawer Header and Menu Content -->
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigation_view"
@@ -43,5 +42,6 @@
         android:layout_height="match_parent"
         app:headerLayout="@layout/layout_drawer_header_navigation"
         android:layout_gravity="start"
-        app:menu="@menu/menu_navigation"/>
+        android:background="@color/white"
+        app:menu="@menu/menu_navigation" />
 </androidx.drawerlayout.widget.DrawerLayout>

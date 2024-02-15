@@ -2,46 +2,31 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="180dp"
-    android:background="@color/white"
-    android:orientation="vertical">
+    android:padding="22dp"
+    android:background="@color/green600"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
 
     <!-- User Avatar & User Name -->
-    <LinearLayout
-        android:layout_width="match_parent"
+    <de.hdodenhof.circleimageview.CircleImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/profile_image"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:src="@drawable/baseline_person_24"
+        app:civ_border_color="@color/white"
+        app:civ_border_width="3sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginVertical="22dp"
         android:layout_marginLeft="22dp"
-        android:gravity="center_vertical">
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/profile_image"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
-            app:civ_border_width="3sp"
-            app:civ_border_color="@color/green"
-            android:src="@drawable/baseline_person_24" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="22dp"
-            android:text="[USER NAME]"
-            android:textColor="@color/greenDark"
-            android:textSize="24sp"
-            android:textStyle="bold" />
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="3dp"
-        android:background="@color/greenDark"/>
-
-    <!-- 3 Headers of Home, Dashboard, Profile -->
-
-
+        android:text="[USER NAME]"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
 
 
 </LinearLayout>
+

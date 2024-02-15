@@ -44,4 +44,8 @@
 
     <!-- Logout -->
     <string name="logout_label">Logout</string>
+
+    <!-- Navigation Drawer -->
+    <string name="drawer_nav_open">Open the Navigation Drawer</string>
+    <string name="drawer_nav_close">Close the Navigation Drawer</string>
 </resources>

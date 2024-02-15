@@ -18,10 +18,10 @@
     <string name="register_label_already_have_account">Already have an account? Sign in</string>
 
     <!-- Home Activity -->
-    <string name="home_header">Home Page</string>
+    <string name="home_header">Home</string>
 
     <!-- Dashboard Activity -->
-    <string name="dashboard_header">Dashboard Page</string>
+    <string name="dashboard_header">Dashboard</string>
     <string name="dashboard_node_label_temp">Temperature</string>
     <string name="dashboard_node_label_air_humidity">Air Humidity</string>
     <string name="dashboard_node_label_soil_moisture">Soil Moisture</string>

@@ -1,5 +1,7 @@
 package com.observers.ecosentry_mobile.models.node;
 
+import com.google.firebase.firestore.GeoPoint;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -8,137 +10,125 @@ public class Node implements Serializable {
     // ======================
     // == Fields
     // ======================
-    private String mName;
-    private double mCo;
-    private double mDust;
-    private double mHumidity;
-    private double mRain;
-    private double mSoilMoisture;
-    private double mTemperature;
-    private GeoPoint mGeoPoint;
+    private String name;
+    private double co;
+    private double dust;
+    private double humidity;
+    private double rain;
+    private double soil_moisture;
+    private double temperature;
+    private GeoPoint geopoint;
 
     /**
      * FIXME: Change to Date (Timestamp) type in Firebase
      * - https://firebase.google.com/docs/reference/android/com/google/firebase/Timestamp
      */
-    private Date mCensoredDate;
+//    private Date mCensoredDate;
 
     // ======================
     // == Constructors
     // ======================
 
     /**
-     * Constructor for Data Fetching from FireStore
-     *
-     * @param mName
-     * @param mCo
-     * @param mDust
-     * @param mHumidity
-     * @param mRain
-     * @param mSoilMoisture
-     * @param mTemperature
-     * @param mGeoPoint
-     * @param mCensoredDate
+     * Constructor for data fetching from firestore
      */
-    public Node(String mName, double mCo, double mDust, double mHumidity, double mRain, double mSoilMoisture, double mTemperature, GeoPoint mGeoPoint, Date mCensoredDate) {
-        this.mName = mName;
-        this.mCo = mCo;
-        this.mDust = mDust;
-        this.mHumidity = mHumidity;
-        this.mRain = mRain;
-        this.mSoilMoisture = mSoilMoisture;
-        this.mTemperature = mTemperature;
-        this.mGeoPoint = mGeoPoint;
-        this.mCensoredDate = mCensoredDate;
+    public Node() {
     }
-
 
     /**
      * Constructor for ViewHolder
+     *
+     * @param name
+     * @param co
+     * @param dust
+     * @param humidity
+     * @param rain
+     * @param soil_moisture
+     * @param temperature
      */
-    public Node(String mName, double mCo, double mDust, double mHumidity, double mRain, double mSoilMoisture, double mTemperature) {
-        this.mName = mName;
-        this.mCo = mCo;
-        this.mDust = mDust;
-        this.mHumidity = mHumidity;
-        this.mRain = mRain;
-        this.mSoilMoisture = mSoilMoisture;
-        this.mTemperature = mTemperature;
+    public Node(String name, double co, double dust, double humidity, double rain, double soil_moisture, double temperature) {
+        this.name = name;
+        this.co = co;
+        this.dust = dust;
+        this.humidity = humidity;
+        this.rain = rain;
+        this.soil_moisture = soil_moisture;
+        this.temperature = temperature;
     }
+
 
     // ======================
     // == Getters & Setters
     // ======================
-
-    public String getmName() {
-        return mName;
+    public String getName() {
+        return name;
     }
 
-    public void setmName(String mName) {
-        this.mName = mName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public double getmCo() {
-        return mCo;
+    public double getCo() {
+        return co;
     }
 
-    public void setmCo(double mCo) {
-        this.mCo = mCo;
+    public void setCo(double co) {
+        this.co = co;
     }
 
-    public double getmDust() {
-        return mDust;
+    public double getDust() {
+        return dust;
     }
 
-    public void setmDust(double mDust) {
-        this.mDust = mDust;
+    public void setDust(double dust) {
+        this.dust = dust;
     }
 
-    public double getmHumidity() {
-        return mHumidity;
+    public double getHumidity() {
+        return humidity;
     }
 
-    public void setmHumidity(double mHumidity) {
-        this.mHumidity = mHumidity;
+    public void setHumidity(double humidity) {
+        this.humidity = humidity;
     }
 
-    public double getmRain() {
-        return mRain;
+    public double getRain() {
+        return rain;
     }
 
-    public void setmRain(double mRain) {
-        this.mRain = mRain;
+    public void setRain(double rain) {
+        this.rain = rain;
     }
 
-    public double getmSoilMoisture() {
-        return mSoilMoisture;
+    public double getSoil_moisture() {
+        return soil_moisture;
     }
 
-    public void setmSoilMoisture(double mSoilMoisture) {
-        this.mSoilMoisture = mSoilMoisture;
+    public void setSoil_moisture(double soil_moisture) {
+        this.soil_moisture = soil_moisture;
     }
 
-    public double getmTemperature() {
-        return mTemperature;
+    public double getTemperature() {
+        return temperature;
     }
 
-    public void setmTemperature(double mTemperature) {
-        this.mTemperature = mTemperature;
+    public void setTemperature(double temperature) {
+        this.temperature = temperature;
     }
 
-    public GeoPoint getmGeoPoint() {
-        return mGeoPoint;
+    public GeoPoint getGeopoint() {
+        return geopoint;
     }
 
-    public void setmGeoPoint(GeoPoint mGeoPoint) {
-        this.mGeoPoint = mGeoPoint;
+    public void setGeopoint(GeoPoint geopoint) {
+        this.geopoint = geopoint;
     }
 
-    public Date getmCensoredDate() {
-        return mCensoredDate;
-    }
-
-    public void setmCensoredDate(Date mCensoredDate) {
-        this.mCensoredDate = mCensoredDate;
-    }
+//    public Date getmCensoredDate() {
+//        return mCensoredDate;
+//    }
+//
+//    public void setmCensoredDate(Date mCensoredDate) {
+//        this.mCensoredDate = mCensoredDate;
+//    }
 }

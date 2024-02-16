@@ -14,7 +14,7 @@ import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
 import com.observers.ecosentry_mobile.R;
-import com.observers.ecosentry_mobile.controllers.drawer.fragments.DashboardFragment;
+import com.observers.ecosentry_mobile.controllers.drawer.fragments.dashboard.DashboardFragment;
 import com.observers.ecosentry_mobile.controllers.drawer.fragments.HomeFragment;
 import com.observers.ecosentry_mobile.controllers.drawer.fragments.ProfileFragment;
 

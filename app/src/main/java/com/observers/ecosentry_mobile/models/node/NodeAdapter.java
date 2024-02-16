@@ -49,13 +49,13 @@ public class NodeAdapter extends RecyclerView.Adapter<NodeAdapter.NodeViewHolder
             return;
         }
 
-        holder.mTextViewName.setText(node.getmName());
-        holder.mTextViewHumidity.setText(String.format("%.1f", node.getmHumidity()) + " %");
-        holder.mTextViewSoilMoisture.setText(String.format("%.1f", node.getmSoilMoisture()) + " %");
-        holder.mTextViewTemperature.setText(String.format("%.1f", node.getmTemperature()));
-        holder.mTextViewCO.setText(String.format("%.1f", node.getmCo()) + " PPM");
-        holder.mTextViewRainFall.setText(String.format("%.1f", node.getmRain()) + " in/h");
-        holder.mTextViewDustParticle.setText(String.format("%.1f", node.getmDust()) + "\u00B5g/m3");
+        holder.mTextViewName.setText(node.getName());
+        holder.mTextViewHumidity.setText(String.format("%.1f", node.getHumidity()) + " %");
+        holder.mTextViewSoilMoisture.setText(String.format("%.1f", node.getSoil_moisture()) + " %");
+        holder.mTextViewTemperature.setText(String.format("%.1f", node.getTemperature()));
+        holder.mTextViewCO.setText(String.format("%.1f", node.getCo()) + " PPM");
+        holder.mTextViewRainFall.setText(String.format("%.1f", node.getRain()) + " in/h");
+        holder.mTextViewDustParticle.setText(String.format("%.1f", node.getDust()) + "\u00B5g/m3");
 
         /**
          * TODO: Currently Setting Default Mode, Will implement algo later
@@ -80,14 +80,14 @@ public class NodeAdapter extends RecyclerView.Adapter<NodeAdapter.NodeViewHolder
      * A class for converting item_node.xml to java class file
      */
     public class NodeViewHolder extends RecyclerView.ViewHolder {
-        private AppCompatTextView mTextViewName;
-        private AppCompatTextView mTextViewTemperature;
-        private AppCompatTextView mTextViewHumidity;
-        private AppCompatTextView mTextViewSoilMoisture;
-        private AppCompatTextView mTextViewCO;
-        private AppCompatTextView mTextViewRainFall;
-        private AppCompatTextView mTextViewDustParticle;
-        private AppCompatTextView mTextViewDangerLevel;
+        private final AppCompatTextView mTextViewName;
+        private final AppCompatTextView mTextViewTemperature;
+        private final AppCompatTextView mTextViewHumidity;
+        private final AppCompatTextView mTextViewSoilMoisture;
+        private final AppCompatTextView mTextViewCO;
+        private final AppCompatTextView mTextViewRainFall;
+        private final AppCompatTextView mTextViewDustParticle;
+        private final AppCompatTextView mTextViewDangerLevel;
 
         public NodeViewHolder(@NonNull View itemView) {
             super(itemView);

@@ -44,7 +44,7 @@ android {
                     "src\\main\\res",
                     "src\\main\\res\\layouts\\profile",
                     "src\\main\\res",
-                    "src\\main\\res\\dashboard"
+                    "src\\main\\res\\dashboard", "src\\main\\res", "src\\main\\res\\layouts\\dashboard"
                 )
             }
         }

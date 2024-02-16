@@ -1,17 +1,21 @@
 package com.observers.ecosentry_mobile;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
+import com.observers.ecosentry_mobile.fragments.DashboardFragment;
+import com.observers.ecosentry_mobile.fragments.HomeFragment;
+import com.observers.ecosentry_mobile.fragments.ProfileFragment;
 
 public class DrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -21,6 +25,14 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
     private DrawerLayout mDrawerLayout;
     private Toolbar mToolbar;
     private NavigationView mNavigationView;
+
+    /**
+     * Fields for keep tabs in current fragment
+     */
+    private static final int FRAGMENT_HOME = 0;
+    private static final int FRAGMENT_DASHBOARD = 1;
+    private static final int FRAGMENT_PROFILE = 2;
+    private int mCurrentFragment;
 
     // ================================
     // == Life Cycle
@@ -35,6 +47,10 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
 
         // Drawer Setup
         setUpDrawer();
+
+        // Drawer Navigation View Setup
+        mCurrentFragment = FRAGMENT_HOME;
+        setUpNavigationDrawer();
     }
 
     // ================================
@@ -60,28 +76,55 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
         toggle.syncState();
     }
 
-    private void setUpNavigationView() {
+    /**
+     * Setup Navigation Drawer
+     */
+    private void setUpNavigationDrawer() {
         mNavigationView = findViewById(R.id.navigation_view);
         mNavigationView.setNavigationItemSelectedListener(this);
+
+        // Setting Home Fragment By Default
+        replaceFragment(new HomeFragment());
+        mNavigationView.getMenu().findItem(R.id.nav_home).setChecked(true);
     }
 
+    /**
+     * Handling the fragment clicked from the user
+     *
+     * @param item The selected item
+     * @return
+     */
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-
+            // If the current is home, then don't do anything
+            // else, replace content view with fragment_home.xml (inflated to HomeFragment.class)
+            if (mCurrentFragment != FRAGMENT_HOME) {
+                replaceFragment(new HomeFragment());
+                mCurrentFragment = FRAGMENT_HOME;
+            }
         } else if (id == R.id.nav_dashboard) {
-
+            if (mCurrentFragment != FRAGMENT_DASHBOARD) {
+                replaceFragment(new DashboardFragment());
+                mCurrentFragment = FRAGMENT_DASHBOARD;
+            }
         } else if (id == R.id.nav_profile) {
-
+            if (mCurrentFragment != FRAGMENT_PROFILE) {
+                replaceFragment(new ProfileFragment());
+                mCurrentFragment = FRAGMENT_PROFILE;
+            }
         }
 
-        // Close drawer if did not choose anything
+        // Close drawer after choosing a fragment (item selected)
         mDrawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
 
+    /**
+     * Handling the back button pushed
+     */
     @Override
     public void onBackPressed() {
         // If Drawer is open, push back and close it
@@ -91,5 +134,16 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
             // If drawer is close, just push back as usual
             super.onBackPressed();
         }
+    }
+
+    /**
+     * Replace the content_frame.xml with the fragment class (based on fragment xml)
+     *
+     * @param fragment
+     */
+    public void replaceFragment(Fragment fragment) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.content_frame, fragment);
+        transaction.commit();
     }
 }

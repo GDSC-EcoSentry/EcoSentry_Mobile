@@ -1,9 +1,9 @@
 package com.observers.ecosentry_mobile.models.node;
 
 import com.google.firebase.firestore.GeoPoint;
+import com.google.type.Date;
 
 import java.io.Serializable;
-import java.util.Date;
 
 public class Node implements Serializable {
 
@@ -18,12 +18,7 @@ public class Node implements Serializable {
     private double soil_moisture;
     private double temperature;
     private GeoPoint geopoint;
-
-    /**
-     * FIXME: Change to Date (Timestamp) type in Firebase
-     * - https://firebase.google.com/docs/reference/android/com/google/firebase/Timestamp
-     */
-//    private Date mCensoredDate;
+    private Date date;
 
     // ======================
     // == Constructors
@@ -56,6 +51,23 @@ public class Node implements Serializable {
         this.temperature = temperature;
     }
 
+    // ======================
+    // == Methods
+    // ======================
+    @Override
+    public String toString() {
+        return "Node{" +
+                "name='" + name + '\'' +
+                ", co=" + co +
+                ", dust=" + dust +
+                ", humidity=" + humidity +
+                ", rain=" + rain +
+                ", soil_moisture=" + soil_moisture +
+                ", temperature=" + temperature +
+                ", geopoint=" + geopoint +
+                ", date=" + date +
+                '}';
+    }
 
     // ======================
     // == Getters & Setters
@@ -124,11 +136,11 @@ public class Node implements Serializable {
         this.geopoint = geopoint;
     }
 
-//    public Date getmCensoredDate() {
-//        return mCensoredDate;
-//    }
-//
-//    public void setmCensoredDate(Date mCensoredDate) {
-//        this.mCensoredDate = mCensoredDate;
-//    }
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
 }

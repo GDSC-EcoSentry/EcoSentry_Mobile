@@ -37,8 +37,8 @@ public class NodeAdapter extends RecyclerView.Adapter<NodeAdapter.NodeViewHolder
     @Override
     public NodeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        // Convert item_node.xml into View class
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_node, parent, false);
+        // Convert cardview_item_node.xml into View class
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_item_node, parent, false);
         return new NodeViewHolder(view);
     }
 
@@ -77,7 +77,7 @@ public class NodeAdapter extends RecyclerView.Adapter<NodeAdapter.NodeViewHolder
     // =====================================
 
     /**
-     * A class for converting item_node.xml to java class file
+     * A class for converting cardview_item_node.xml to java class file
      */
     public class NodeViewHolder extends RecyclerView.ViewHolder {
         private final AppCompatTextView mTextViewName;

@@ -29,6 +29,8 @@
     <string name="dashboard_node_label_rain_fall">Rain Fall</string>
     <string name="dashboard_node_label_dust_particle">Dust Particle</string>
 
+    <string name="dashboard_station_label_dropdown">Stations</string>
+
     <string name="dashboard_node_label_in_danger">In Danger</string>
     <string name="dashboard_node_label_on_safe">On Safe</string>
     <string name="dashboard_node_label_warning">Warning</string>

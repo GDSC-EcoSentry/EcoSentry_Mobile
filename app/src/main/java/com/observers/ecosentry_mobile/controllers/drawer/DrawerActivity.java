@@ -15,8 +15,8 @@ import android.view.MenuItem;
 import com.google.android.material.navigation.NavigationView;
 import com.observers.ecosentry_mobile.R;
 import com.observers.ecosentry_mobile.controllers.drawer.fragments.dashboard.DashboardFragment;
-import com.observers.ecosentry_mobile.controllers.drawer.fragments.HomeFragment;
-import com.observers.ecosentry_mobile.controllers.drawer.fragments.ProfileFragment;
+import com.observers.ecosentry_mobile.controllers.drawer.fragments.home.HomeFragment;
+import com.observers.ecosentry_mobile.controllers.drawer.fragments.profile.ProfileFragment;
 
 public class DrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 

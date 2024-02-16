@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -24,14 +27,17 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.observers.ecosentry_mobile.R;
 import com.observers.ecosentry_mobile.models.node.Node;
 import com.observers.ecosentry_mobile.models.node.NodeAdapter;
+import com.observers.ecosentry_mobile.models.station.Station;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class DashboardFragment extends Fragment {
 
     // ================================
     // == Fields
     // ================================
+    private MaterialAutoCompleteTextView mMaterialAutoCompleteTextView;
     private RecyclerView mRecyclerView;
     private NodeAdapter mNodeAdapter;
 
@@ -49,24 +55,21 @@ public class DashboardFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // Setup Dropdown Material Textview
+        setUpDropdownTextView(view);
+
         // Setup Node Adapter
         mNodeAdapter = new NodeAdapter(getContext());
 
-        //
-        DemoNodeData.getNodes(new DataFetchCallback() {
+        // Get Async Data from Fire Store
+        DemoData.getNodes(new DataFetchCallback() {
             @Override
             public void onDataFetched(ArrayList<Node> nodes) {
                 // Setup Node Adapter
                 if (nodes.size() != 0) {
                     System.out.println("successsss");
                     for (Node n : nodes) {
-                        System.out.println(n.getTemperature());
-                        System.out.println(n.getName());
-                        System.out.println(n.getSoil_moisture());
-                        System.out.println(n.getCo());
-                        System.out.println(n.getRain());
-                        System.out.println(n.getGeopoint());
-                        System.out.println(n.getDust());
+                        System.out.println(n.toString());
                     }
                 }
 
@@ -84,28 +87,77 @@ public class DashboardFragment extends Fragment {
     // == Methods
     // ================================
 
+    /**
+     * FIXME: When clicking the station, might be you should get nodes based on the station
+     *
+     * @param view: a view containing this dropdown
+     */
+    public void setUpDropdownTextView(@NonNull View view) {
+
+        // Convert list to String[] as the required parameter
+        String[] stations = DemoData.getFakeStations()
+                .parallelStream()
+                .map(Station::getName)
+                .toArray(String[]::new);
+
+        // Setup a list of stations
+        mMaterialAutoCompleteTextView = view.findViewById(R.id.autoCompleteTextViewStation);
+        mMaterialAutoCompleteTextView.setSimpleItems(stations);
+
+        // Trigger get nodes when click a station
+        mMaterialAutoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(parent.getContext(), "You just click me " + id, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 }
 
 
 /**
- * FIXME: Fetching Data of each node from Firebase and add to the array list
+ * FIXME: Will move to separate class after done testing
  */
-class DemoNodeData {
-//    public static ArrayList<Node> getNodes() {
-//        ArrayList<Node> nodeArrayList = new ArrayList<>();
-//
-//        for (int i = 1; i < 100; i++) {
-//            nodeArrayList.add(new Node("Node " + i,
-//                    new Random().nextDouble() * 100 + 1,
-//                    new Random().nextDouble() * 100 + 1,
-//                    new Random().nextDouble() * 100 + 1,
-//                    new Random().nextDouble() * 100 + 1,
-//                    new Random().nextDouble() * 100 + 1,
-//                    new Random().nextDouble() * 100 + 1));
-//        }
-//        return nodeArrayList;
-//    }
+class DemoData {
 
+    /**
+     * A function to test for dropdown stations
+     *
+     * @return
+     */
+    public static ArrayList<Station> getFakeStations() {
+        ArrayList<Station> stationArrayList = new ArrayList<>();
+        for (int i = 1; i < 10; i++) {
+            stationArrayList.add(new Station("Rừng Sác", "Station " + i));
+        }
+        return stationArrayList;
+    }
+
+    /**
+     * A function to test for recycler view layout
+     *
+     * @return list of fake nodes
+     */
+    public static ArrayList<Node> getFakeNodes() {
+        ArrayList<Node> nodeArrayList = new ArrayList<>();
+
+        for (int i = 1; i < 100; i++) {
+            nodeArrayList.add(new Node("Node " + i,
+                    new Random().nextDouble() * 100 + 1,
+                    new Random().nextDouble() * 100 + 1,
+                    new Random().nextDouble() * 100 + 1,
+                    new Random().nextDouble() * 100 + 1,
+                    new Random().nextDouble() * 100 + 1,
+                    new Random().nextDouble() * 100 + 1));
+        }
+        return nodeArrayList;
+    }
+
+    /**
+     * Get a list of nodes by calling firestore function
+     *
+     * @param callback: a callback adding nodes to the Node Adapter
+     */
     public static void getNodes(DataFetchCallback callback) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         ArrayList<Node> list = new ArrayList<>();

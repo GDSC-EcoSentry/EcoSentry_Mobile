@@ -1,4 +1,4 @@
-package com.observers.ecosentry_mobile;
+package com.observers.ecosentry_mobile.controllers.drawer;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -13,9 +13,10 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
-import com.observers.ecosentry_mobile.fragments.DashboardFragment;
-import com.observers.ecosentry_mobile.fragments.HomeFragment;
-import com.observers.ecosentry_mobile.fragments.ProfileFragment;
+import com.observers.ecosentry_mobile.R;
+import com.observers.ecosentry_mobile.controllers.drawer.fragments.DashboardFragment;
+import com.observers.ecosentry_mobile.controllers.drawer.fragments.HomeFragment;
+import com.observers.ecosentry_mobile.controllers.drawer.fragments.ProfileFragment;
 
 public class DrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -51,6 +52,10 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
         // Drawer Navigation View Setup
         mCurrentFragment = FRAGMENT_HOME;
         setUpNavigationDrawer();
+
+        // Setting Home Fragment By Default
+        replaceFragment(new HomeFragment());
+        mNavigationView.getMenu().findItem(R.id.nav_home).setChecked(true);
     }
 
     // ================================
@@ -82,10 +87,6 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
     private void setUpNavigationDrawer() {
         mNavigationView = findViewById(R.id.navigation_view);
         mNavigationView.setNavigationItemSelectedListener(this);
-
-        // Setting Home Fragment By Default
-        replaceFragment(new HomeFragment());
-        mNavigationView.getMenu().findItem(R.id.nav_home).setChecked(true);
     }
 
     /**

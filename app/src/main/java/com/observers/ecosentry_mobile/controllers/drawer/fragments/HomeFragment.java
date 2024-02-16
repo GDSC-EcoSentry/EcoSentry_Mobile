@@ -1,4 +1,4 @@
-package com.observers.ecosentry_mobile.fragments;
+package com.observers.ecosentry_mobile.controllers.drawer.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

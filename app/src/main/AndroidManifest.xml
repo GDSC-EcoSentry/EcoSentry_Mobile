@@ -13,7 +13,7 @@
         android:theme="@style/Theme.EcoSentry_Mobile"
         tools:targetApi="31">
         <activity
-            android:name=".DrawerActivity"
+            android:name=".controllers.drawer.DrawerActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,7 +22,7 @@
         </activity>
 
         <activity
-            android:name=".LoginActivity"
+            android:name=".controllers.authentication.LoginActivity"
             android:exported="true">
         </activity>
     </application>

@@ -1,4 +1,4 @@
-package com.observers.ecosentry_mobile.fragments;
+package com.observers.ecosentry_mobile.controllers.drawer.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,11 +11,10 @@ import androidx.fragment.app.Fragment;
 
 import com.observers.ecosentry_mobile.R;
 
-public class ProfileFragment extends Fragment {
-
+public class DashboardFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+        return inflater.inflate(R.layout.fragment_dashboard, container, false);
     }
 }

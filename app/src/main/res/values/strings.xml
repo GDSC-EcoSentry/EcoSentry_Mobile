@@ -1,0 +1,51 @@
+<resources>
+    <string name="app_name">EcoSentry_Mobile</string>
+
+    <!-- Login Activity -->
+    <string name="login_header">Login to EcoSentry</string>
+    <string name="login_label_email">Email Address</string>
+    <string name="login_label_password">Password</string>
+    <string name="login_label_button">Sign In</string>
+    <string name="login_label_no_account">Don\'t have an account? Register Now</string>
+
+    <!-- Register Activity -->
+    <string name="register_header">Register to EcoSentry</string>
+    <string name="register_label_username">User Name</string>
+    <string name="register_label_email">Email Address</string>
+    <string name="register_label_password">Password</string>
+    <string name="register_label_password_confirm">Password</string>
+    <string name="register_label_button">Register an account</string>
+    <string name="register_label_already_have_account">Already have an account? Sign in</string>
+
+    <!-- Home Activity -->
+    <string name="home_header">Home</string>
+
+    <!-- Dashboard Activity -->
+    <string name="dashboard_header">Dashboard</string>
+    <string name="dashboard_node_label_temp">Temperature</string>
+    <string name="dashboard_node_label_air_humidity">Air Humidity</string>
+    <string name="dashboard_node_label_soil_moisture">Soil Moisture</string>
+    <string name="dashboard_node_label_co">CO</string>
+    <string name="dashboard_node_label_rain_fall">Rain Fall</string>
+    <string name="dashboard_node_label_dust_particle">Dust Particle</string>
+
+    <string name="dashboard_node_label_in_danger">In Danger</string>
+    <string name="dashboard_node_label_on_safe">On Safe</string>
+    <string name="dashboard_node_label_warning">Warning</string>
+
+    <!-- Profile Activity -->
+    <string name="profile_header">Profile</string>
+    <string name="profile_label_username">Username</string>
+    <string name="profile_label_firstname">First Name</string>
+    <string name="profile_label_lastname">Last Name</string>
+    <string name="profile_label_phone_number">Phone Number</string>
+    <string name="profile_label_address">Address</string>
+    <string name="profile_label_button">Save</string>
+
+    <!-- Logout -->
+    <string name="logout_label">Logout</string>
+
+    <!-- Navigation Drawer -->
+    <string name="drawer_nav_open">Open the Navigation Drawer</string>
+    <string name="drawer_nav_close">Close the Navigation Drawer</string>
+</resources>

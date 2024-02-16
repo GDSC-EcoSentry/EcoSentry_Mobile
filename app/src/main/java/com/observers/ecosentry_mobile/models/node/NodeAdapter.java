@@ -50,12 +50,12 @@ public class NodeAdapter extends RecyclerView.Adapter<NodeAdapter.NodeViewHolder
         }
 
         holder.mTextViewName.setText(node.getmName());
-        holder.mTextViewHumidity.setText(String.valueOf(node.getmHumidity()) + " %");
-        holder.mTextViewSoilMoisture.setText(String.valueOf(node.getmSoilMoisture()) + " %");
-        holder.mTextViewTemperature.setText(String.valueOf(node.getmTemperature()));
-        holder.mTextViewCO.setText(String.valueOf(node.getmCo()) + " PPM");
-        holder.mTextViewRainFall.setText(String.valueOf(node.getmRain()) + " in/h");
-        holder.mTextViewDustParticle.setText(String.valueOf(node.getmDust()) + "\u00B5g/m3");
+        holder.mTextViewHumidity.setText(String.format("%.1f", node.getmHumidity()) + " %");
+        holder.mTextViewSoilMoisture.setText(String.format("%.1f", node.getmSoilMoisture()) + " %");
+        holder.mTextViewTemperature.setText(String.format("%.1f", node.getmTemperature()));
+        holder.mTextViewCO.setText(String.format("%.1f", node.getmCo()) + " PPM");
+        holder.mTextViewRainFall.setText(String.format("%.1f", node.getmRain()) + " in/h");
+        holder.mTextViewDustParticle.setText(String.format("%.1f", node.getmDust()) + "\u00B5g/m3");
 
         /**
          * TODO: Currently Setting Default Mode, Will implement algo later

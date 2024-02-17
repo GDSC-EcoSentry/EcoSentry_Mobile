@@ -73,7 +73,7 @@ public class DashboardFragment extends Fragment {
                         String nodeid = (String) o;
                         //check log
                         System.out.println(nodes.get(nodeid));
-                        list.add((Node)nodes.get(nodeid));
+                        list.add((Node) nodes.get(nodeid));
                     }
                     // Setup Node Adapter
                     mNodeAdapter.setData(list);
@@ -100,14 +100,15 @@ public class DashboardFragment extends Fragment {
         mMaterialAutoCompleteTextView = view.findViewById(R.id.autoCompleteTextViewStation);
         DemoData.getStations(list -> {
             // Convert list to String[] as the required parameter
-           String[] stations = (String[]) list.keySet().parallelStream()
-                   .toArray(String[]::new);
-           //test
+            String[] stations = (String[]) list.keySet()
+                    .parallelStream()
+                    .toArray(String[]::new);
+            //test
             for (String s : stations) {
                 System.out.println(s);
             }
             // Setup a list of stations
-           mMaterialAutoCompleteTextView.setSimpleItems(stations);
+            mMaterialAutoCompleteTextView.setSimpleItems(stations);
         });
         // Trigger get nodes when click a station
         mMaterialAutoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -147,13 +148,13 @@ class DemoData {
      */
     public static void getStations(DataFetchCallback callback) {
         CollectionReference stationsRef = db.collection("stations");
-        TreeMap<String,Station> stationsList = new TreeMap<>();
+        TreeMap<String, Station> stationsList = new TreeMap<>();
         stationsRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 for (QueryDocumentSnapshot snapshot : queryDocumentSnapshots) {
                     Station station = snapshot.toObject(Station.class);
-                    stationsList.put(station.getName(),station);
+                    stationsList.put(station.getName(), station);
                 }
                 callback.onDataFetched(stationsList);
             }
@@ -189,7 +190,8 @@ class DemoData {
                 .document(stationID)
                 .collection("nodes");
         nodesRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            TreeMap<String,Node> list = new TreeMap<>();
+            TreeMap<String, Node> list = new TreeMap<>();
+
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 for (QueryDocumentSnapshot snapshot : queryDocumentSnapshots) {
@@ -204,7 +206,7 @@ class DemoData {
                             }
                             if (value != null && value.exists()) {
                                 node = value.toObject(Node.class);
-                                list.put(node.getName(),node);
+                                list.put(node.getName(), node);
                             }
 //                            if (list.size() == queryDocumentSnapshots.size()) {
 //                                callback.onDataFetched(list);

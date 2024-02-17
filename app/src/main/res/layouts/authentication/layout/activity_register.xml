@@ -174,7 +174,9 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="42dp"
                     android:text="@string/register_label_button"
-                    app:icon="@drawable/ic_login_24" />
+                    android:textAllCaps="true"
+                    android:textSize="18sp"
+                    app:icon="@drawable/ic_register_24" />
 
                 <!-- Register Now Link -->
                 <com.google.android.material.textview.MaterialTextView

@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,7 +29,6 @@ import com.observers.ecosentry_mobile.models.node.NodeAdapter;
 import com.observers.ecosentry_mobile.models.station.Station;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Random;
 import java.util.TreeMap;
 
@@ -64,7 +62,7 @@ public class DashboardFragment extends Fragment {
         mNodeAdapter = new NodeAdapter(getContext());
 
         // Get Async Data from Fire Store
-        DemoData.getNodes("1", new DataFetchCallback() {
+        DemoData.getNodes("1", new IDataFetchCallback() {
             @Override
             public void onDataFetched(TreeMap nodes) {
                 if (nodes.size() != 0) {
@@ -98,24 +96,28 @@ public class DashboardFragment extends Fragment {
      */
     public void setUpDropdownTextView(@NonNull View view) {
         mMaterialAutoCompleteTextView = view.findViewById(R.id.autoCompleteTextViewStation);
+
         DemoData.getStations(list -> {
             // Convert list to String[] as the required parameter
             String[] stations = (String[]) list.keySet()
                     .parallelStream()
                     .toArray(String[]::new);
+
             //test
             for (String s : stations) {
                 System.out.println(s);
             }
+
             // Setup a list of stations
             mMaterialAutoCompleteTextView.setSimpleItems(stations);
         });
+
         // Trigger get nodes when click a station
         mMaterialAutoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Object station = parent.getItemAtPosition(position);
-                DemoData.getNodes(""+id,nodes -> {
+                DemoData.getNodes("" + id, nodes -> {
                     mNodeAdapter.setData(new ArrayList<Node>(nodes.values()));
                 });
             }
@@ -146,7 +148,7 @@ class DemoData {
     /**
      * This function is used to get all stations from firestore
      */
-    public static void getStations(DataFetchCallback callback) {
+    public static void getStations(IDataFetchCallback callback) {
         CollectionReference stationsRef = db.collection("stations");
         TreeMap<String, Station> stationsList = new TreeMap<>();
         stationsRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -185,7 +187,7 @@ class DemoData {
      *
      * @param callback: a callback adding nodes to the Node Adapter
      */
-    public static void getNodes(String stationID, DataFetchCallback callback) {
+    public static void getNodes(String stationID, IDataFetchCallback callback) {
         CollectionReference nodesRef = db.collection("stations")
                 .document(stationID)
                 .collection("nodes");

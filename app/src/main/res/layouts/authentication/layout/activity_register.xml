@@ -16,7 +16,6 @@
         android:scrollbars="horizontal">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/profile_image"
             android:layout_width="112dp"
             android:layout_height="112dp"
             android:layout_gravity="center_horizontal"
@@ -55,7 +54,7 @@
 
                 <!-- Login With Google -->
                 <com.google.android.gms.common.SignInButton
-                    android:id="@+id/buttonLoginGoogle"
+                    android:id="@+id/buttonGoogleRegister"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
@@ -84,7 +83,7 @@
                     app:endIconMode="clear_text">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/textInputEditUserName"
+                        android:id="@+id/textInputEditUserNameRegister"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/register_label_username"
@@ -108,7 +107,7 @@
                     app:endIconMode="clear_text">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/textInputEditTextEmail"
+                        android:id="@+id/textInputEditTextEmailRegister"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/register_label_email"
@@ -132,7 +131,7 @@
                     app:endIconMode="password_toggle">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/textInputEditTextPassword"
+                        android:id="@+id/textInputEditTextPasswordRegister"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/register_label_password"
@@ -156,7 +155,7 @@
                     app:endIconMode="password_toggle">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/textInputEditTextConfirmPassword"
+                        android:id="@+id/textInputEditTextConfirmPasswordRegister"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/register_label_password_confirm"
@@ -168,7 +167,7 @@
 
                 <!-- Signin Button -->
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/buttonNormalLogin"
+                    android:id="@+id/buttonNormalRegister"
                     style="@style/Widget.Material3.Button.Icon"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -179,7 +178,7 @@
 
                 <!-- Register Now Link -->
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/textViewLoginNow"
+                    android:id="@+id/textViewLoginNowRegister"
                     android:layout_width="wrap_content"
                     android:layout_height="48sp"
                     android:layout_gravity="center_horizontal"

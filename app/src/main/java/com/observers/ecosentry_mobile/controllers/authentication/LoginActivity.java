@@ -54,12 +54,8 @@ public class LoginActivity extends AppCompatActivity {
         mTextViewRegisterNowLogin = findViewById(R.id.textViewRegisterNowLogin);
         mButtonNormalLogin = findViewById(R.id.buttonNormalLogin);
 
-        // Setup Link
-        mTextViewRegisterNowLogin = findViewById(R.id.textViewRegisterNowLogin);
-        SpannableString text = new SpannableString(mTextViewRegisterNowLogin.getText());
-        int colorID = ContextCompat.getColor(this, R.color.green600);
-        text.setSpan(new ForegroundColorSpan(colorID), 23, 35, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        mTextViewRegisterNowLogin.setText(text);
+        // Setup Link to Register
+        setUpLinkToRegisterActivity();
 
         // Setup listeners
         mButtonNormalLogin.setOnClickListener(setUpButtonNormalLogin());
@@ -69,6 +65,23 @@ public class LoginActivity extends AppCompatActivity {
     // ======================
     // == Methods
     // ======================
+
+    public void setUpLinkToRegisterActivity() {
+        mTextViewRegisterNowLogin = findViewById(R.id.textViewRegisterNowLogin);
+        SpannableString text = new SpannableString(mTextViewRegisterNowLogin.getText());
+        int colorID = ContextCompat.getColor(this, R.color.green600);
+        text.setSpan(new ForegroundColorSpan(colorID), 23, 35, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        mTextViewRegisterNowLogin.setText(text);
+
+        // Listener for register link
+        mTextViewRegisterNowLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ActivityHelper.moveToNextActivity(LoginActivity.this, RegisterActivity.class, null);
+            }
+        });
+    }
+
 
     /**
      * FIXME: Setup Normal Login using Firebase Authentication

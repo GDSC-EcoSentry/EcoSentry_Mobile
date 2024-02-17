@@ -113,7 +113,8 @@ public class DashboardFragment extends Fragment {
         mMaterialAutoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                DemoData.getNodes(""+(id+1),nodes -> {
+                Object station = parent.getItemAtPosition(position);
+                DemoData.getNodes(""+id,nodes -> {
                     mNodeAdapter.setData(new ArrayList<Node>(nodes.values()));
                 });
             }

@@ -1,5 +1,6 @@
 package com.observers.ecosentry_mobile.models.node;
 
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.GeoPoint;
 import com.google.type.Date;
 
@@ -18,7 +19,7 @@ public class Node implements Serializable {
     private double soil_moisture;
     private double temperature;
     private GeoPoint geopoint;
-    private Date date;
+    private Timestamp date;
 
     // ======================
     // == Constructors
@@ -136,11 +137,11 @@ public class Node implements Serializable {
         this.geopoint = geopoint;
     }
 
-    public Date getDate() {
+    public Timestamp getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(Timestamp date) {
         this.date = date;
     }
 }

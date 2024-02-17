@@ -1,5 +1,6 @@
 package com.observers.ecosentry_mobile.models.station;
 
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.GeoPoint;
 import com.google.type.Date;
 
@@ -12,8 +13,8 @@ public class Station implements Serializable {
     // ======================
     private String location;
     private String name;
-    private Date lastUpdate;
-    private Date dateCreated;
+    private Timestamp lastUpdate;
+    private Timestamp dateCreated;
     private GeoPoint geopoint;
 
     // ======================
@@ -72,19 +73,19 @@ public class Station implements Serializable {
         this.name = name;
     }
 
-    public Date getLastUpdate() {
+    public Timestamp getLastUpdate() {
         return lastUpdate;
     }
 
-    public void setLastUpdate(Date lastUpdate) {
+    public void setLastUpdate(Timestamp lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
 
-    public Date getDateCreated() {
+    public Timestamp getDateCreated() {
         return dateCreated;
     }
 
-    public void setDateCreated(Date dateCreated) {
+    public void setDateCreated(Timestamp dateCreated) {
         this.dateCreated = dateCreated;
     }
 

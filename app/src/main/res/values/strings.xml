@@ -3,17 +3,19 @@
 
     <!-- Login Activity -->
     <string name="login_header">Login to EcoSentry</string>
-    <string name="login_label_email">Email Address</string>
+    <string name="login_label_email">Email</string>
+    <string name="login_label_email_placeholder">abc@gmail.com</string>
     <string name="login_label_password">Password</string>
     <string name="login_label_button">Sign In</string>
+    <string name="login_label_line_middle_text">or</string>
     <string name="login_label_no_account">Don\'t have an account? Register Now</string>
 
     <!-- Register Activity -->
     <string name="register_header">Register to EcoSentry</string>
-    <string name="register_label_username">User Name</string>
-    <string name="register_label_email">Email Address</string>
+    <string name="register_label_username">Name</string>
+    <string name="register_label_email">Email</string>
     <string name="register_label_password">Password</string>
-    <string name="register_label_password_confirm">Password</string>
+    <string name="register_label_password_confirm">Confirm Password</string>
     <string name="register_label_button">Register an account</string>
     <string name="register_label_already_have_account">Already have an account? Sign in</string>
 
@@ -50,4 +52,5 @@
     <!-- Navigation Drawer -->
     <string name="drawer_nav_open">Open the Navigation Drawer</string>
     <string name="drawer_nav_close">Close the Navigation Drawer</string>
+
 </resources>

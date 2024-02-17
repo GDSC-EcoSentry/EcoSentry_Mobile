@@ -42,6 +42,7 @@ public class DashboardFragment extends Fragment {
     private MaterialAutoCompleteTextView mMaterialAutoCompleteTextView;
     private RecyclerView mRecyclerView;
     private NodeAdapter mNodeAdapter;
+    private TreeMap<String, Station> stationsList = new TreeMap<>();
 
     // ================================
     // == Life Cycle
@@ -100,18 +101,20 @@ public class DashboardFragment extends Fragment {
         mMaterialAutoCompleteTextView = view.findViewById(R.id.autoCompleteTextViewStation);
         DemoData.getStations(list -> {
             // Convert list to String[] as the required parameter
-            String[] stations = (String[]) list.keySet()
+            String[] stationsName = (String[]) list.keySet()
                     .parallelStream()
                     .toArray(String[]::new);
+            stationsList = list;
             // Setup a list of stations
-            mMaterialAutoCompleteTextView.setSimpleItems(stations);
+            mMaterialAutoCompleteTextView.setSimpleItems(stationsName);
         });
         // Trigger get nodes when click a station
         mMaterialAutoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String stationid = (String) parent.getItemAtPosition(position);
-                DemoData.getNodes(""+stationid,nodes -> {
+                String stationName = (String) parent.getItemAtPosition(position);
+                String stationId = stationsList.get(stationName).getId();
+                DemoData.getNodes(stationId,nodes -> {
                     mNodeAdapter.setData(new ArrayList<Node>(nodes.values()));
                 });
             }
@@ -151,7 +154,7 @@ class DemoData {
                 for (QueryDocumentSnapshot snapshot : queryDocumentSnapshots) {
                     Station station = snapshot.toObject(Station.class);
                     station.setId(snapshot.getId());
-                    stationsList.put(snapshot.getId(), station);
+                    stationsList.put(station.getName(), station);
                 }
                 callback.onDataFetched(stationsList);
             }

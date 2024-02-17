@@ -22,6 +22,7 @@ import com.observers.ecosentry_mobile.R;
 import com.observers.ecosentry_mobile.controllers.drawer.DrawerActivity;
 import com.observers.ecosentry_mobile.models.user.User;
 import com.observers.ecosentry_mobile.utils.ActivityHelper;
+import com.observers.ecosentry_mobile.utils.shared.DataLocalManager;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -99,15 +100,26 @@ public class LoginActivity extends AppCompatActivity {
                 if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
                     // If success, do the firebase authentication here
 
+                    // FIXME: After login sucessfull, do the following
+                    // Using SharedPreference (Just like SESSION in Java Web)
+                    // 1. Set to the preference: setUser(User user) at DataLocalManager
+                    //      1.1 If already set, go next
+                    //      1.2 If not set, then set User object
+                    // 2. Move to DrawerActivity
 
-                    // After login sucesss, get user object
-                    // then passing to intent,
-                    // then move to Drawer Activity
-
-                    // FIXME: Fake User, return the user, add to the HashMap, pass to function
+                    // Fake Data (Get user from firestore)
                     User user = new User();
                     user.setUsername("Vu Kim Duy");
+                    user.setEmail(email);
+                    user.setPassword(password);
                     user.setPhotoURL("https://firebasestorage.googleapis.com/v0/b/gdsc-ecosentry.appspot.com/o/images%2Fprofile%2FLrzDEPyt4aN6VFQYjTZEsjMBtsC3?alt=media&token=0b60e0e3-cbbf-4529-8efb-1de2f93555c5");
+
+                    // Save data to local preference
+                    if (DataLocalManager.getUser().isEmpty()) {
+                        DataLocalManager.setUser(user);
+                    }
+
+                    // Move to Drawer Activity
                     Map<String, Object> data = new HashMap();
                     data.put("user", user);
                     ActivityHelper.moveToNextActivity(LoginActivity.this, DrawerActivity.class, data);

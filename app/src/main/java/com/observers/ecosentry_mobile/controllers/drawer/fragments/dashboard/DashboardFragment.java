@@ -50,7 +50,6 @@ public class DashboardFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_dashboard, container, false);
     }
 
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -99,9 +98,7 @@ public class DashboardFragment extends Fragment {
 
         DemoData.getStations(list -> {
             // Convert list to String[] as the required parameter
-            String[] stations = (String[]) list.keySet()
-                    .parallelStream()
-                    .toArray(String[]::new);
+            String[] stations = (String[]) list.keySet().stream().toArray(String[]::new);
 
             // Setup a list of stations
             mMaterialAutoCompleteTextView.setSimpleItems(stations);

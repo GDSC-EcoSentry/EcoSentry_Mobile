@@ -103,11 +103,6 @@ public class DashboardFragment extends Fragment {
                     .parallelStream()
                     .toArray(String[]::new);
 
-            //test
-            for (String s : stations) {
-                System.out.println(s);
-            }
-
             // Setup a list of stations
             mMaterialAutoCompleteTextView.setSimpleItems(stations);
         });
@@ -116,8 +111,8 @@ public class DashboardFragment extends Fragment {
         mMaterialAutoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Object station = parent.getItemAtPosition(position);
-                DemoData.getNodes("" + id, nodes -> {
+                String stationid = (String) parent.getItemAtPosition(position);
+                DemoData.getNodes("" + stationid, nodes -> {
                     mNodeAdapter.setData(new ArrayList<Node>(nodes.values()));
                 });
             }
@@ -156,7 +151,8 @@ class DemoData {
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 for (QueryDocumentSnapshot snapshot : queryDocumentSnapshots) {
                     Station station = snapshot.toObject(Station.class);
-                    stationsList.put(station.getName(), station);
+                    station.setId(snapshot.getId());
+                    stationsList.put(snapshot.getId(), station);
                 }
                 callback.onDataFetched(stationsList);
             }

@@ -16,6 +16,7 @@ public class Station implements Serializable {
     private Timestamp lastUpdate;
     private Timestamp dateCreated;
     private GeoPoint geopoint;
+    private String id;
 
     // ======================
     // == Constructors
@@ -95,5 +96,13 @@ public class Station implements Serializable {
 
     public void setGeopoint(GeoPoint geopoint) {
         this.geopoint = geopoint;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

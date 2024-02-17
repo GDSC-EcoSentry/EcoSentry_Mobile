@@ -106,6 +106,8 @@ public class LoginActivity extends AppCompatActivity {
 
                     // FIXME: Fake User, return the user, add to the HashMap, pass to function
                     User user = new User();
+                    user.setUsername("Vu Kim Duy");
+                    user.setPhotoURL("https://firebasestorage.googleapis.com/v0/b/gdsc-ecosentry.appspot.com/o/images%2Fprofile%2FLrzDEPyt4aN6VFQYjTZEsjMBtsC3?alt=media&token=0b60e0e3-cbbf-4529-8efb-1de2f93555c5");
                     Map<String, Object> data = new HashMap();
                     data.put("user", user);
                     ActivityHelper.moveToNextActivity(LoginActivity.this, DrawerActivity.class, data);

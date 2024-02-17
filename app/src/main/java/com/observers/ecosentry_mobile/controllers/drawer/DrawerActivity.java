@@ -9,14 +9,27 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.navigation.NavigationView;
 import com.observers.ecosentry_mobile.R;
 import com.observers.ecosentry_mobile.controllers.drawer.fragments.dashboard.DashboardFragment;
 import com.observers.ecosentry_mobile.controllers.drawer.fragments.home.HomeFragment;
 import com.observers.ecosentry_mobile.controllers.drawer.fragments.profile.ProfileFragment;
+import com.observers.ecosentry_mobile.models.user.User;
+
+import java.net.URI;
+import java.util.zip.Inflater;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class DrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -26,6 +39,8 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
     private DrawerLayout mDrawerLayout;
     private Toolbar mToolbar;
     private NavigationView mNavigationView;
+    private CircleImageView mCircleImageView;
+    private TextView mUserName;
 
     /**
      * Fields for keep tabs in current fragment
@@ -51,11 +66,16 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
 
         // Drawer Navigation View Setup
         mCurrentFragment = FRAGMENT_HOME;
-        setUpNavigationDrawer();
+        setUpDrawerNavigation();
 
         // Setting Home Fragment By Default
         replaceFragment(new HomeFragment());
         mNavigationView.getMenu().findItem(R.id.nav_home).setChecked(true);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
     }
 
     // ================================
@@ -84,9 +104,25 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
     /**
      * Setup Navigation Drawer
      */
-    private void setUpNavigationDrawer() {
+    private void setUpDrawerNavigation() {
         mNavigationView = findViewById(R.id.navigation_view);
         mNavigationView.setNavigationItemSelectedListener(this);
+
+        // Get image view and text view from header
+        View headerView = mNavigationView.getHeaderView(0);
+        mCircleImageView = headerView.findViewById(R.id.circleImageViewProfileDrawer);
+        mUserName = headerView.findViewById(R.id.textViewUserNameDrawer);
+
+        // Get data from login
+        Intent intent = getIntent();
+        User user = (User) intent.getSerializableExtra("user");
+
+        // Using glide to load image from url
+        Glide.with(DrawerActivity.this).load(user.getPhotoURL())
+                .into(mCircleImageView);
+
+        // Set User Name
+        mUserName.setText(user.getUsername());
     }
 
     /**

@@ -67,10 +67,10 @@ public class RegisterActivity extends AppCompatActivity {
      * A function to custom color the link and set up link to login
      */
     public void setUpLinkToLoginActivity() {
-        mTextViewLoginNowRegister = findViewById(R.id.textViewRegisterNowLogin);
+        mTextViewLoginNowRegister = findViewById(R.id.textViewLoginNowRegister);
         SpannableString text = new SpannableString(mTextViewLoginNowRegister.getText());
         int colorID = ContextCompat.getColor(this, R.color.green600);
-        text.setSpan(new ForegroundColorSpan(colorID), 23, 35, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        text.setSpan(new ForegroundColorSpan(colorID), 25, 32, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         mTextViewLoginNowRegister.setText(text);
 
         // Listener for register link

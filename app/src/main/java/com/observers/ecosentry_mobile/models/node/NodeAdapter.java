@@ -36,7 +36,6 @@ public class NodeAdapter extends RecyclerView.Adapter<NodeAdapter.NodeViewHolder
     @NonNull
     @Override
     public NodeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
         // Convert cardview_item_node.xml into View class
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_item_node, parent, false);
         return new NodeViewHolder(view);

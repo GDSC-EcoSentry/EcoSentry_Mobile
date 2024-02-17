@@ -66,6 +66,9 @@ public class LoginActivity extends AppCompatActivity {
     // == Methods
     // ======================
 
+    /**
+     * A function to custom color the link and set up link listener
+     */
     public void setUpLinkToRegisterActivity() {
         mTextViewRegisterNowLogin = findViewById(R.id.textViewRegisterNowLogin);
         SpannableString text = new SpannableString(mTextViewRegisterNowLogin.getText());

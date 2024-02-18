@@ -28,7 +28,6 @@ public class RegisterActivity extends AppCompatActivity {
     // ================================
     // == Fields
     // ================================
-
     private SignInButton mButtonGoogleRegister;
     private TextInputEditText mTextInputEditTextEmailRegister,
             mTextInputEditTextPasswordRegister,
@@ -37,6 +36,9 @@ public class RegisterActivity extends AppCompatActivity {
     private MaterialButton mButtonNormalRegister;
     private MaterialTextView mTextViewLoginNowRegister;
 
+    // ================================
+    // == Life Cycle
+    // ================================
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,7 +86,7 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     /**
-     * FIXME: Setup Normal Login using Firebase Authentication
+     * FIXME: Setup Register using Firebase Authentication
      */
     public View.OnClickListener setUpButtonNormalRegister() {
         return new View.OnClickListener() {
@@ -100,14 +102,14 @@ public class RegisterActivity extends AppCompatActivity {
                         && !TextUtils.isEmpty(confirmedPassword)
                         && !TextUtils.isEmpty(username)) {
 
-                    // Check if reconfirm is matched
                     // FIXME: Add more logic if u have better idea
+                    // Check if reconfirm is matched
                     if (!password.equals(confirmedPassword)) {
                         Toast.makeText(RegisterActivity.this, "Password is not matched. Please try again", Toast.LENGTH_LONG).show();
                     } else {
-                        // Register to the firebase here
+                        // FIXME: Register to the firebase here
 
-                        // After register, go straight to DrawerActivity with registered user
+                        // After register sucesfully, go to Login Activity
                         // FIXME: Fake User
                         User user = new User();
                         Map<String, Object> data = new HashMap();

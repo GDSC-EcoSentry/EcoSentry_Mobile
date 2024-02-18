@@ -3,6 +3,7 @@ package com.observers.ecosentry_mobile.controllers.authentication;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -35,7 +36,8 @@ public class LoginActivity extends AppCompatActivity {
     // == Fields
     // ================================
     private SignInButton mButtonGoogleLogin;
-    private TextInputEditText mTextInputEditTextEmailLogin, mTextInputEditTextPasswordLogin;
+    private TextInputEditText mTextInputEditTextEmailLogin,
+            mTextInputEditTextPasswordLogin;
     private MaterialButton mButtonNormalLogin;
     private MaterialTextView mTextViewRegisterNowLogin;
 
@@ -96,16 +98,18 @@ public class LoginActivity extends AppCompatActivity {
      *
      * @formatter:on
      */
+
+    /**
+     * PAUSE, STOP life cycle  will check user within shared preference
+     */
     @Override
     protected void onStart() {
         super.onStart();
 
+        // If user in local storage, retrieve form it
         User user = DataLocalManager.getUser();
-
         if (user != null) {
-            Map<String, Object> data = new HashMap();
-            data.put("user", user);
-            ActivityHelper.moveToNextActivity(LoginActivity.this, DrawerActivity.class, data);
+            ActivityHelper.sendDataToNextActivity("user", user, LoginActivity.this, DrawerActivity.class);
         }
     }
 
@@ -144,7 +148,7 @@ public class LoginActivity extends AppCompatActivity {
                 String password = String.valueOf(mTextInputEditTextPasswordLogin.getText());
 
                 if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
-                    // If success, do the firebase authentication here
+                    // FIXME: If success, do the firebase authentication here
 
                     // FIXME: After login successful, do the following
                     // 1. Set to the preference: setUser(User user) at DataLocalManager
@@ -163,10 +167,8 @@ public class LoginActivity extends AppCompatActivity {
                         DataLocalManager.setUser(user);
                     }
 
-                    // Move to Drawer Activity
-                    Map<String, Object> data = new HashMap();
-                    data.put("user", user);
-                    ActivityHelper.moveToNextActivity(LoginActivity.this, DrawerActivity.class, data);
+                    // Go to DrawerActivity
+                    ActivityHelper.sendDataToNextActivity("user", user, LoginActivity.this, DrawerActivity.class);
                 } else {
                     // If fail, showing toast
                     Toast.makeText(LoginActivity.this, "Please input email and password", Toast.LENGTH_LONG).show();
@@ -186,16 +188,28 @@ public class LoginActivity extends AppCompatActivity {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Put your google authentication code in here
+                // FIXME: Put your google authentication code in here
 
 
-                // FIXME: Fake User, return the user, add to the HashMap, pass to function
+                // FIXME: After login successful, do the following
+                // 1. Set to the preference: setUser(User user) at DataLocalManager
+                //      1.1 If already set, go next
+                //      1.2 If not set, then set User object
+                // 2. Move to DrawerActivity
+
+                // Fake Data (This object is returned from Firestore)
                 User user = new User();
+                user.setUsername("Vu Kim Duy");
                 user.setEmail("abc@gmail.com");
-                user.setUsername("Cái này tui test thôi nha");
-                Map<String, Object> data = new HashMap();
-                data.put("user", user);
-                ActivityHelper.moveToNextActivity(LoginActivity.this, DrawerActivity.class, data);
+                user.setPhotoURL("https://firebasestorage.googleapis.com/v0/b/gdsc-ecosentry.appspot.com/o/images%2Fprofile%2FLrzDEPyt4aN6VFQYjTZEsjMBtsC3?alt=media&token=0b60e0e3-cbbf-4529-8efb-1de2f93555c5");
+
+                // Save data to local preference
+                if (DataLocalManager.getUser() == null) {
+                    DataLocalManager.setUser(user);
+                }
+
+                // Go to DrawerActivity
+                ActivityHelper.sendDataToNextActivity("user", user, LoginActivity.this, DrawerActivity.class);
             }
         };
     }

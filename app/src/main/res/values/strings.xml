@@ -57,5 +57,6 @@
 
     <!-- Toolbar -->
     <string name="toolbar_item_signout">Sign Out</string>
+    <string name="title_activity_maps">MapsActivity</string>
 
 </resources>

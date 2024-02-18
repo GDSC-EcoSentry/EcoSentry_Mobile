@@ -14,6 +14,8 @@ import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.observers.ecosentry_mobile.R;
 import com.observers.ecosentry_mobile.controllers.authentication.LoginActivity;
 import com.observers.ecosentry_mobile.models.user.User;
@@ -36,6 +38,9 @@ public class ProfileFragment extends Fragment {
             mTextInputEditTextPhoneProfile,
             mTextInputEditTextAddressProfile;
     private MaterialButton mButtonSaveProfile;
+    private FirebaseFirestore db;
+
+    private User user;
 
     // ======================
     // == Life Cycle
@@ -62,7 +67,7 @@ public class ProfileFragment extends Fragment {
         mButtonSaveProfile = view.findViewById(R.id.buttonSaveProfile);
 
         // Set current User to views (get from shared preference)
-        User user = DataLocalManager.getUser();
+        user = DataLocalManager.getUser();
         if (user != null) {
             setCurrentUserOnAppToViews(user);
         } else {
@@ -71,6 +76,8 @@ public class ProfileFragment extends Fragment {
 
         // Setup Listeners
         mButtonSaveProfile.setOnClickListener(saveEditedUser());
+        // Setup Firebase Firestore
+        db = FirebaseFirestore.getInstance();
     }
 
     // ======================
@@ -109,21 +116,32 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
 
                 // Get user from views
-                User user = new User();
-                mTextInputEditTextUserNameProfile.getText();
-                mTextInputEditTextFirstNameProfile.getText();
-                mTextInputEditTextLastNameProfile.getText();
-                mTextInputEditTextPhoneProfile.getText();
-                mTextInputEditTextAddressProfile.getText();
+                String username = mTextInputEditTextUserNameProfile.getText().toString();
+                String firstName = mTextInputEditTextFirstNameProfile.getText().toString();
+                String lastName = mTextInputEditTextLastNameProfile.getText().toString();
+                String phone = mTextInputEditTextPhoneProfile.getText().toString();
+                String address = mTextInputEditTextAddressProfile.getText().toString();
+                user.setUsername(username);
+                user.setFirstName(firstName);
+                user.setLastName(lastName);
+                user.setPhone(phone);
+                user.setAddress(address);
 
                 // Set new User object to shared Preference
                 DataLocalManager.setUser(user);
 
                 // FIXME: Update new User to Firebase
-
-                // Notify User to save sucessfully
-                Toast.makeText(v.getContext(), "Save User Sucessfully", Toast.LENGTH_LONG).show();
+                updateUser(user);
             }
         };
+    }
+
+    public void updateUser(User user) {
+        DocumentReference userRef = db.collection("users")
+                .document(user.getUid());
+        userRef.set(user).addOnSuccessListener(success -> {
+            // Notify User to save sucessfully
+            Toast.makeText(getContext(), "Save User Sucessfully", Toast.LENGTH_LONG).show();
+        });
     }
 }

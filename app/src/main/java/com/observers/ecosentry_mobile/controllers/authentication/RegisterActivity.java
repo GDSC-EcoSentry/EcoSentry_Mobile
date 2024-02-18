@@ -86,7 +86,7 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     /**
-     * FIXME: Setup Register using Firebase Authentication
+     * FIXME: Setup Register using Firebase Authentication (Normarl Register)
      */
     public View.OnClickListener setUpButtonNormalRegister() {
         return new View.OnClickListener() {
@@ -97,24 +97,22 @@ public class RegisterActivity extends AppCompatActivity {
                 String confirmedPassword = String.valueOf(mTextInputEditTextConfirmPasswordRegister.getText());
                 String username = String.valueOf(mTextInputEditTextUserNameRegister);
 
+                // FIXME: Add more logic if u have better idea
                 if (!TextUtils.isEmpty(email)
                         && !TextUtils.isEmpty(password)
                         && !TextUtils.isEmpty(confirmedPassword)
                         && !TextUtils.isEmpty(username)) {
 
-                    // FIXME: Add more logic if u have better idea
                     // Check if reconfirm is matched
                     if (!password.equals(confirmedPassword)) {
                         Toast.makeText(RegisterActivity.this, "Password is not matched. Please try again", Toast.LENGTH_LONG).show();
                     } else {
                         // FIXME: Register to the firebase here
 
-                        // After register sucesfully, go to Login Activity
-                        // FIXME: Fake User
-                        User user = new User();
-                        Map<String, Object> data = new HashMap();
-                        data.put("user", user);
-                        ActivityHelper.moveToNextActivity(RegisterActivity.this, DrawerActivity.class, data);
+                        // FIXME: After register sucesfully, go to Login Activity
+                        Toast.makeText(RegisterActivity.this, "Register Successfully", Toast.LENGTH_LONG).show();
+                        ActivityHelper.moveToNextActivity(RegisterActivity.this, DrawerActivity.class, null);
+
                     }
                 } else {
                     // If fail, showing toast
@@ -131,21 +129,16 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     /**
-     * FIXME: Setup Google Login
+     * FIXME: Setup Register using Firebase Authentication (OAuthn)
      */
     public View.OnClickListener setUpButtonGoogleRegister() {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Put your google authentication code in here
+                // FIXME: Put your google authentication code in here
 
-                // FIXME: Fake User, return the user, add to the HashMap, pass to function
-                User user = new User();
-                user.setEmail("abc@gmail.com");
-                user.setUsername("Cái này tui test thôi nha");
-                Map<String, Object> data = new HashMap();
-                data.put("user", user);
-                ActivityHelper.moveToNextActivity(RegisterActivity.this, DrawerActivity.class, data);
+                // FIXME: After register sucesfully, go to Login Activity
+                ActivityHelper.moveToNextActivity(RegisterActivity.this, DrawerActivity.class, null);
             }
         };
     }

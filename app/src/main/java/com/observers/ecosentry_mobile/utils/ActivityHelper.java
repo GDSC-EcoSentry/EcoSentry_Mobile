@@ -44,7 +44,6 @@ public abstract class ActivityHelper {
 //        currActivity.finish();
     }
 
-
     /**
      * Pass a data on Intent to the next Activity
      *

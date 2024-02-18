@@ -99,14 +99,11 @@ public class DashboardFragment extends Fragment {
 
         DemoData.getStations(list -> {
             // Convert list to String[] as the required parameter
-<<<<<<< HEAD
             String[] stationsName = (String[]) list.keySet()
                     .parallelStream()
                     .toArray(String[]::new);
             stationsList = list;
-=======
             String[] stations = (String[]) list.keySet().stream().toArray(String[]::new);
->>>>>>> 58fd65cc1aa5c7113f21311cdae21a71563ca948
 
             // Setup a list of stations
             mMaterialAutoCompleteTextView.setSimpleItems(stationsName);

@@ -46,6 +46,20 @@ public class User implements Serializable {
         this.role = role;
     }
 
+    /**
+     * Constructor with fields:
+     * @param email
+     * @param uid
+     * @param username
+     * @param role
+     */
+    public User(String email, String uid, String username, String role) {
+        this.email = email;
+        this.uid = uid;
+        this.username = username;
+        this.role = role;
+    }
+
     // ======================
     // == Methods
     // ======================

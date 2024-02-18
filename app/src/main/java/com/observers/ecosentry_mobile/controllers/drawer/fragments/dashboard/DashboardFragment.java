@@ -51,7 +51,6 @@ public class DashboardFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_dashboard, container, false);
     }
 
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -62,7 +61,7 @@ public class DashboardFragment extends Fragment {
         // Setup Node Adapter
         mNodeAdapter = new NodeAdapter(getContext());
 
-        // Get Async Data from Fire Store
+        // Get First Async Data from Fire Store
         DemoData.getNodes("1", new IDataFetchCallback() {
             @Override
             public void onDataFetched(TreeMap nodes) {
@@ -91,7 +90,7 @@ public class DashboardFragment extends Fragment {
     // ================================
 
     /**
-     * FIXME: When clicking the station, might be you should get nodes based on the station
+     * When clicking the station, might be you should get nodes based on the station
      *
      * @param view: a view containing this dropdown
      */
@@ -100,10 +99,14 @@ public class DashboardFragment extends Fragment {
 
         DemoData.getStations(list -> {
             // Convert list to String[] as the required parameter
+<<<<<<< HEAD
             String[] stationsName = (String[]) list.keySet()
                     .parallelStream()
                     .toArray(String[]::new);
             stationsList = list;
+=======
+            String[] stations = (String[]) list.keySet().stream().toArray(String[]::new);
+>>>>>>> 58fd65cc1aa5c7113f21311cdae21a71563ca948
 
             // Setup a list of stations
             mMaterialAutoCompleteTextView.setSimpleItems(stationsName);
@@ -128,7 +131,7 @@ public class DashboardFragment extends Fragment {
  * FIXME: Will move to separate class after done testing
  */
 class DemoData {
-    private static FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private final static FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     /**
      * A function to test for dropdown stations
@@ -191,7 +194,7 @@ class DemoData {
                 .document(stationID)
                 .collection("nodes");
         nodesRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            TreeMap<String, Node> list = new TreeMap<>();
+            final TreeMap<String, Node> list = new TreeMap<>();
 
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {

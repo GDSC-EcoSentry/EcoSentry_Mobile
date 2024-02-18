@@ -40,12 +40,13 @@
 
     <!-- Profile Activity -->
     <string name="profile_header">Profile</string>
-    <string name="profile_label_username">Username</string>
+    <string name="profile_label_username">User Name</string>
     <string name="profile_label_firstname">First Name</string>
     <string name="profile_label_lastname">Last Name</string>
-    <string name="profile_label_phone_number">Phone Number</string>
+    <string name="profile_label_phone_number">Phone</string>
     <string name="profile_label_address">Address</string>
-    <string name="profile_label_button">Save</string>
+    <string name="profile_label_email">Email</string>
+    <string name="profile_label_button">Save Profile</string>
 
     <!-- Logout -->
     <string name="logout_label">Logout</string>
@@ -53,5 +54,8 @@
     <!-- Navigation Drawer -->
     <string name="drawer_nav_open">Open the Navigation Drawer</string>
     <string name="drawer_nav_close">Close the Navigation Drawer</string>
+
+    <!-- Toolbar -->
+    <string name="toolbar_item_signout">Sign Out</string>
 
 </resources>

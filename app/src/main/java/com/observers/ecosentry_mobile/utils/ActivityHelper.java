@@ -6,7 +6,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
+import com.observers.ecosentry_mobile.controllers.authentication.LoginActivity;
+import com.observers.ecosentry_mobile.models.user.User;
+
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Map;
 
 public abstract class ActivityHelper {
@@ -14,7 +18,7 @@ public abstract class ActivityHelper {
     /**
      * Generic function to pass data to another activity
      */
-    public static void moveToNextActivity(Activity currActivity, Class desActivity, Map<String, Object> dataMap) {
+    public static void moveToNextActivity(Context currActivity, Class desActivity, Map<String, Object> dataMap) {
         Intent intent = new Intent(currActivity, desActivity);
 
         if (dataMap != null && !dataMap.isEmpty()) {
@@ -38,5 +42,20 @@ public abstract class ActivityHelper {
 
         // Prevent from swiping back to previous activity
 //        currActivity.finish();
+    }
+
+    /**
+     * Pass a data on Intent to the next Activity
+     *
+     * @param key
+     * @param user
+     * @param currAcc
+     * @param desAcc
+     * @param <T>
+     */
+    public static <T> void sendDataToNextActivity(String key, T user, Context currAcc, Class desAcc) {
+        Map<String, Object> data = new HashMap<>();
+        data.put(key, user);
+        ActivityHelper.moveToNextActivity(currAcc, desAcc, data);
     }
 }

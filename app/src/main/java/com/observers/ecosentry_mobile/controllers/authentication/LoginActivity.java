@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -41,6 +42,7 @@ import com.observers.ecosentry_mobile.R;
 import com.observers.ecosentry_mobile.controllers.drawer.DrawerActivity;
 import com.observers.ecosentry_mobile.models.user.User;
 import com.observers.ecosentry_mobile.utils.ActivityHelper;
+import com.observers.ecosentry_mobile.utils.shared.DataLocalManager;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -52,9 +54,9 @@ public class LoginActivity extends AppCompatActivity {
     // ================================
     // == Fields
     // ================================
-
     private SignInButton mButtonGoogleLogin;
-    private TextInputEditText mTextInputEditTextEmailLogin, mTextInputEditTextPasswordLogin;
+    private TextInputEditText mTextInputEditTextEmailLogin,
+            mTextInputEditTextPasswordLogin;
     private MaterialButton mButtonNormalLogin;
     private MaterialTextView mTextViewRegisterNowLogin;
     private FirebaseFirestore db;
@@ -112,10 +114,61 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
     }
+    /**
+     * @formatter:off
+     *
+     * FIXME: Reasons I use Shared Preference in LoginActivity
+     * Scenarios if I don't use Shared Preference
+     *      If User logged in, swipe back to LoginActivity from DrawerActivity
+     *          => login again
+     *      If in STOP State, go back to RUNNING
+     *          => login again
+     *      If in PAUSE State, go back to RUNNING
+     *          => login again
+     *      If User logged in, next time go to the app
+     *          => login again
+     *      If edit data on ProfilePage
+     *          => Lose User object since using Intent
+     *          get destroyed after reaching DrawerActivity
+     *
+     * Similarity to Java Web
+     *      Passing user through Intent
+     *          => like RequestScope
+     *      Passing user through SharedPreference
+     *          => like Context Scope
+     *
+     * How to delete Shared Preference
+     *      Delete the application
+     *      Go to setting/ Choose our application/ Delete cached data, user data
+     *
+     * Checkout the keyword will you want to understand:
+     *      SharedPreference
+     *      Activity Lifecycle, Fragment Lifecycle, Application Lifecycle
+     *      Singleton Design Pattern
+     *
+     * @formatter:on
+     */
+
+    /**
+     * PAUSE, STOP life cycle  will check user within shared preference
+     */
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        // If user in local storage, retrieve form it
+        User user = DataLocalManager.getUser();
+        if (user != null) {
+            ActivityHelper.sendDataToNextActivity("user", user, LoginActivity.this, DrawerActivity.class);
+        }
+    }
     // ======================
     // == Methods
     // ======================
 
+    /**
+     * A function to custom color the link and set up link listener
+     */
     public void setUpLinkToRegisterActivity() {
         mTextViewRegisterNowLogin = findViewById(R.id.textViewRegisterNowLogin);
         SpannableString text = new SpannableString(mTextViewRegisterNowLogin.getText());
@@ -153,9 +206,12 @@ public class LoginActivity extends AppCompatActivity {
                                     String email = firebaseUser.getEmail();
                                     User user = new User();
                                     user.setEmail(email);
-                                    Map<String, Object> data = new HashMap();
-                                    data.put("user", user);
-                                    ActivityHelper.moveToNextActivity(LoginActivity.this, DrawerActivity.class, data);
+                                    // Save data to local preference
+                                    if (DataLocalManager.getUser() == null) {
+                                        DataLocalManager.setUser(user);
+                                    }
+                                    // Go to DrawerActivity
+                                    ActivityHelper.sendDataToNextActivity("user", user, LoginActivity.this, DrawerActivity.class);
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {
@@ -165,15 +221,18 @@ public class LoginActivity extends AppCompatActivity {
                                 }
                             });
 
-                    // After login sucesss, get user object
-                    // then passing to intent,
-                    // then move to Drawer Activity
-
-                    // FIXME: Fake User, return the user, add to the HashMap, pass to function
+//                    // FIXME: After login successful, do the following
+//                    // 1. Set to the preference: setUser(User user) at DataLocalManager
+//                    //      1.1 If already set, go next
+//                    //      1.2 If not set, then set User object
+//                    // 2. Move to DrawerActivity
+//
+//                    // Fake Data (This object is returned from Firestore)
 //                    User user = new User();
-//                    Map<String, Object> data = new HashMap();
-//                    data.put("user", user);
-//                    ActivityHelper.moveToNextActivity(LoginActivity.this, DrawerActivity.class, data);
+//                    user.setUsername("Vu Kim Duy");
+//                    user.setEmail(email);
+//                    user.setPhotoURL("https://firebasestorage.googleapis.com/v0/b/gdsc-ecosentry.appspot.com/o/images%2Fprofile%2FLrzDEPyt4aN6VFQYjTZEsjMBtsC3?alt=media&token=0b60e0e3-cbbf-4529-8efb-1de2f93555c5");
+
                 } else {
                     // If fail, showing toast
                     Toast.makeText(LoginActivity.this, "Please input email and password", Toast.LENGTH_LONG).show();
@@ -205,6 +264,20 @@ public class LoginActivity extends AppCompatActivity {
 //                Map<String, Object> data = new HashMap();
 //                data.put("user", user);
 //                ActivityHelper.moveToNextActivity(LoginActivity.this, DrawerActivity.class, data);
+                // FIXME: If success, do the firebase authentication here
+
+
+                // FIXME: After login successful, do the following
+                // 1. Set to the preference: setUser(User user) at DataLocalManager
+                //      1.1 If already set, go next
+                //      1.2 If not set, then set User object
+                // 2. Move to DrawerActivity
+//
+//                // Fake Data (This object is returned from Firestore)
+//                User user = new User();
+//                user.setUsername("Vu Kim Duy");
+//                user.setEmail("abc@gmail.com");
+//                user.setPhotoURL("https://firebasestorage.googleapis.com/v0/b/gdsc-ecosentry.appspot.com/o/images%2Fprofile%2FLrzDEPyt4aN6VFQYjTZEsjMBtsC3?alt=media&token=0b60e0e3-cbbf-4529-8efb-1de2f93555c5");
             }
         };
     }
@@ -224,8 +297,6 @@ public class LoginActivity extends AppCompatActivity {
                             String userName = firebaseUser.getDisplayName();
                             String photoUrl = firebaseUser.getPhotoUrl().toString();
                             User user = new User(email,userID,userName,photoUrl,"user");
-                            Map<String, Object> data = new HashMap();
-                            data.put("user",user);
                             // Add user to firestore
                             DocumentReference userRef = db.collection("users").document(userID);
                             userRef.get().addOnSuccessListener(command -> {
@@ -233,7 +304,12 @@ public class LoginActivity extends AppCompatActivity {
                                     userRef.set(user);
                                 }
                             });
-                            ActivityHelper.moveToNextActivity(LoginActivity.this, DrawerActivity.class, data);
+                            // Save data to local preference
+                            if (DataLocalManager.getUser() == null) {
+                                DataLocalManager.setUser(user);
+                            }
+                            // Go to DrawerActivity
+                            ActivityHelper.sendDataToNextActivity("user", user, LoginActivity.this, DrawerActivity.class);
                         }
                     }
                 });

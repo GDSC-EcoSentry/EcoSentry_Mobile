@@ -63,10 +63,18 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-firestore")
+<<<<<<< HEAD
     implementation("com.google.android.gms:play-services-auth:21.0.0")
+=======
+    implementation("com.google.android.gms:play-services-auth:20.7.0")
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+>>>>>>> 58fd65cc1aa5c7113f21311cdae21a71563ca948
 
     // Circle Image View
     implementation("de.hdodenhof:circleimageview:3.1.0")
+
+    // Convert Object to JSON
+    implementation("com.google.code.gson:gson:2.10.1")
 
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")

@@ -9,6 +9,7 @@
     <string name="login_label_button">Sign In</string>
     <string name="login_label_line_middle_text">or</string>
     <string name="login_label_no_account">Don\'t have an account? Register Now</string>
+    <string name="default_web_client_id">AIzaSyBb5hJZuEjeivPft6cLSh4ig010IDnti4s</string>
 
     <!-- Register Activity -->
     <string name="register_header">Register to EcoSentry</string>

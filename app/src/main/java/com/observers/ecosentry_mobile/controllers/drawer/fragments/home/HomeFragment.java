@@ -103,7 +103,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                 LatLng nodeMarker = new LatLng(nodeLatitude,nodeLongtitude);
                 mMap.addMarker(new MarkerOptions().position(nodeMarker)
                         .title(node.getName()));
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(nodeMarker));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(nodeMarker,14));
             }
         });
     }

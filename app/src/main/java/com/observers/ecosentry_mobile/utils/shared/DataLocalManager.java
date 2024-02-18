@@ -2,6 +2,7 @@ package com.observers.ecosentry_mobile.utils.shared;
 
 import android.content.Context;
 
+import com.google.gson.Gson;
 import com.observers.ecosentry_mobile.models.user.User;
 
 import java.util.HashSet;
@@ -61,15 +62,25 @@ public class DataLocalManager {
         return DataLocalManager.getInstance().sharedPreference.getBooleanValue(PREF_FIRST_INSTALL);
     }
 
+    /**
+     * Set user information to the Shared Preference
+     *
+     * @param user
+     */
     public static void setUser(User user) {
-        Set<String> value = new HashSet<>();
-        value.add(user.getEmail());
-        value.add(user.getPassword());
-        value.add(user.getUsername());
-        DataLocalManager.getInstance().sharedPreference.putValue(PREF_USER, value);
+        Gson gson = new Gson();
+        String strJsonUser = gson.toJson(user);
+        DataLocalManager.getInstance().sharedPreference.putValue(PREF_USER, strJsonUser);
     }
 
-    public static Set<String> getUser() {
-        return DataLocalManager.getInstance().sharedPreference.getStringSetValue(PREF_USER);
+    /**
+     * Get user object stored inside the Shared Preference
+     *
+     * @return user object
+     */
+    public static User getUser() {
+        String strJsonUser = DataLocalManager.getInstance().sharedPreference.getStringValue(PREF_USER);
+        Gson gSon = new Gson();
+        return gSon.fromJson(strJsonUser, User.class);
     }
 }

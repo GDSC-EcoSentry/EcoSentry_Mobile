@@ -119,7 +119,7 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(RegisterActivity.this, "Please enter all fields.", Toast.LENGTH_LONG).show();
                 }
 
-                // Clear the text of input
+                // Clear the text of input;
                 mTextInputEditTextEmailRegister.setText("");
                 mTextInputEditTextPasswordRegister.setText("");
                 mTextInputEditTextConfirmPasswordRegister.setText("");

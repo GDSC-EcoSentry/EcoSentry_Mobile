@@ -34,7 +34,6 @@ public class LoginActivity extends AppCompatActivity {
     // ================================
     // == Fields
     // ================================
-
     private SignInButton mButtonGoogleLogin;
     private TextInputEditText mTextInputEditTextEmailLogin, mTextInputEditTextPasswordLogin;
     private MaterialButton mButtonNormalLogin;
@@ -61,6 +60,53 @@ public class LoginActivity extends AppCompatActivity {
         // Setup listeners
         mButtonNormalLogin.setOnClickListener(setUpButtonNormalLogin());
         mButtonGoogleLogin.setOnClickListener(setUpButtonGoogleLogin());
+    }
+
+    /**
+     * @formatter:off
+     *
+     * FIXME: Reasons I use Shared Preference in LoginActivity
+     * Scenarios if I don't use Shared Preference
+     *      If User logged in, swipe back to LoginActivity from DrawerActivity
+     *          => login again
+     *      If in STOP State, go back to RUNNING
+     *          => login again
+     *      If in PAUSE State, go back to RUNNING
+     *          => login again
+     *      If User logged in, next time go to the app
+     *          => login again
+     *      If edit data on ProfilePage
+     *          => Lose User object since using Intent
+     *          get destroyed after reaching DrawerActivity
+     *
+     * Similarity to Java Web
+     *      Passing user through Intent
+     *          => like RequestScope
+     *      Passing user through SharedPreference
+     *          => like Context Scope
+     *
+     * How to delete Shared Preference
+     *      Delete the application
+     *      Go to setting/ Choose our application/ Delete cached data, user data
+     *
+     * Checkout the keyword will you want to understand:
+     *      SharedPreference
+     *      Activity Lifecycle, Fragment Lifecycle, Application Lifecycle
+     *      Singleton Design Pattern
+     *
+     * @formatter:on
+     */
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        User user = DataLocalManager.getUser();
+
+        if (user != null) {
+            Map<String, Object> data = new HashMap();
+            data.put("user", user);
+            ActivityHelper.moveToNextActivity(LoginActivity.this, DrawerActivity.class, data);
+        }
     }
 
     // ======================
@@ -100,22 +146,20 @@ public class LoginActivity extends AppCompatActivity {
                 if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
                     // If success, do the firebase authentication here
 
-                    // FIXME: After login sucessfull, do the following
-                    // Using SharedPreference (Just like SESSION in Java Web)
+                    // FIXME: After login successful, do the following
                     // 1. Set to the preference: setUser(User user) at DataLocalManager
                     //      1.1 If already set, go next
                     //      1.2 If not set, then set User object
                     // 2. Move to DrawerActivity
 
-                    // Fake Data (Get user from firestore)
+                    // Fake Data (This object is returned from Firestore)
                     User user = new User();
                     user.setUsername("Vu Kim Duy");
                     user.setEmail(email);
-                    user.setPassword(password);
                     user.setPhotoURL("https://firebasestorage.googleapis.com/v0/b/gdsc-ecosentry.appspot.com/o/images%2Fprofile%2FLrzDEPyt4aN6VFQYjTZEsjMBtsC3?alt=media&token=0b60e0e3-cbbf-4529-8efb-1de2f93555c5");
 
                     // Save data to local preference
-                    if (DataLocalManager.getUser().isEmpty()) {
+                    if (DataLocalManager.getUser() == null) {
                         DataLocalManager.setUser(user);
                     }
 

@@ -115,7 +115,7 @@ public class DashboardFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String stationName = (String) parent.getItemAtPosition(position);
                 String stationId = stationsList.get(stationName).getId();
-                DemoData.getNodes(stationId,nodes -> {
+                DemoData.getNodes(stationId, nodes -> {
                     mNodeAdapter.setData(new ArrayList<Node>(nodes.values()));
                 });
             }

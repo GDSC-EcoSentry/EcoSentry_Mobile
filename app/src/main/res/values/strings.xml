@@ -22,6 +22,7 @@
 
     <!-- Home Activity -->
     <string name="home_header">Home</string>
+    <string name="title_activity_maps">MapsActivity</string>
 
     <!-- Dashboard Activity -->
     <string name="dashboard_header">Dashboard</string>
@@ -57,6 +58,6 @@
 
     <!-- Toolbar -->
     <string name="toolbar_item_signout">Sign Out</string>
-    <string name="title_activity_maps">MapsActivity</string>
+
 
 </resources>

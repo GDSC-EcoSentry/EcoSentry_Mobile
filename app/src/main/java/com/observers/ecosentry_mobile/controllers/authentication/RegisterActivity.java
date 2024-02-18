@@ -39,9 +39,6 @@ import com.observers.ecosentry_mobile.models.user.User;
 import com.observers.ecosentry_mobile.utils.ActivityHelper;
 import com.observers.ecosentry_mobile.utils.shared.DataLocalManager;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class RegisterActivity extends AppCompatActivity {
 
     // ================================
@@ -58,7 +55,7 @@ public class RegisterActivity extends AppCompatActivity {
     private FirebaseUser currentUser;
     private FirebaseFirestore db;
     private GoogleSignInClient mGoogleSignInClient;
-    private int RC_SIGN_IN = 20;
+    private final int RC_SIGN_IN = 20;
 
     // ================================
     // == Life Cycle
@@ -87,14 +84,14 @@ public class RegisterActivity extends AppCompatActivity {
         // Setup Firebase Auth
         firebaseAuth = FirebaseAuth.getInstance();
 
-        // Setup Firebase Firestore
+        // Setup Firebase FireStore
         db = FirebaseFirestore.getInstance();
 
-        // Setup the Google sign-in proccess
+        // Setup the Google sign-in process
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail().build();
-        mGoogleSignInClient = GoogleSignIn.getClient(this,gso);
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
     }
 
     @Override
@@ -107,7 +104,7 @@ public class RegisterActivity extends AppCompatActivity {
                 firebaseAuth(account.getIdToken());
 
             } catch (Exception e) {
-                Toast.makeText(this,e.getMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -132,14 +129,13 @@ public class RegisterActivity extends AppCompatActivity {
         mTextViewLoginNowRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ActivityHelper.moveToNextActivity(RegisterActivity.this, LoginActivity.class, null);
+                ActivityHelper.moveToNextActivity(RegisterActivity.this, LoginActivity.class);
             }
         });
     }
 
-
     /**
-     * FIXME: Setup Register using Firebase Authentication (Normarl Register)
+     * FIXME: Setup Register using Firebase Authentication (Normar Register)
      */
     public View.OnClickListener setUpButtonNormalRegister() {
         return new View.OnClickListener() {
@@ -161,32 +157,31 @@ public class RegisterActivity extends AppCompatActivity {
                         Toast.makeText(RegisterActivity.this, "Password is not matched. Please try again", Toast.LENGTH_LONG).show();
                     } else {
                         // FIXME: Register to the firebase here
-                        firebaseAuth.createUserWithEmailAndPassword(email,password).
+                        firebaseAuth.createUserWithEmailAndPassword(email, password).
                                 addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    currentUser = firebaseAuth.getCurrentUser();
-                                    String userID = currentUser.getUid();
-                                    User user = new User(email,userID,username,"user");
-                                    // Add user to firestore
-                                    DocumentReference userRef = db.collection("users").document(userID);
-                                    userRef.get().addOnSuccessListener(command -> {
-                                        if (!command.exists()) {
-                                            userRef.set(user);
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                        if (task.isSuccessful()) {
+                                            currentUser = firebaseAuth.getCurrentUser();
+                                            String userID = currentUser.getUid();
+                                            User user = new User(email, userID, username, "user");
+
+                                            // Add user to FireStore
+                                            DocumentReference userRef = db.collection("users").document(userID);
+                                            userRef.get().addOnSuccessListener(command -> {
+                                                if (!command.exists()) {
+                                                    userRef.set(user);
+                                                }
+                                            });
+                                            Toast.makeText(RegisterActivity.this, "Register Successfully", Toast.LENGTH_LONG).show();
+                                            ActivityHelper.moveToNextActivity(RegisterActivity.this, LoginActivity.class);
+                                        } else if (task.getException() instanceof FirebaseAuthUserCollisionException) {
+                                            Toast.makeText(RegisterActivity.this, "Email already exists!", Toast.LENGTH_LONG).show();
+                                        } else {
+                                            Toast.makeText(RegisterActivity.this, "Registration fail!" + task.getException().getMessage(), Toast.LENGTH_LONG).show();
                                         }
-                                    });
-                                    Toast.makeText(RegisterActivity.this, "Register Successfully", Toast.LENGTH_LONG).show();
-                                    ActivityHelper.moveToNextActivity(RegisterActivity.this, LoginActivity.class, null);
-                                }
-                                else if (task.getException() instanceof FirebaseAuthUserCollisionException) {
-                                    Toast.makeText(RegisterActivity.this, "Email already exists!", Toast.LENGTH_LONG).show();
-                                }
-                                else {
-                                    Toast.makeText(RegisterActivity.this, "Registration fail! " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                                }
-                            }
-                        });
+                                    }
+                                });
                     }
                 } else {
                     // If fail, showing toast
@@ -212,13 +207,13 @@ public class RegisterActivity extends AppCompatActivity {
                 // FIXME: Put your google authentication code in here
                 // Retrieve sign-in intent and start sign-in activity
                 Intent intent = mGoogleSignInClient.getSignInIntent();
-                startActivityForResult(intent,RC_SIGN_IN);
+                startActivityForResult(intent, RC_SIGN_IN);
             }
         };
     }
 
     public void firebaseAuth(String idToken) {
-        AuthCredential credential = GoogleAuthProvider.getCredential(idToken,null);
+        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         firebaseAuth.signInWithCredential(credential)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
@@ -229,7 +224,8 @@ public class RegisterActivity extends AppCompatActivity {
                             String userID = firebaseUser.getUid();
                             String userName = firebaseUser.getDisplayName();
                             String photoUrl = firebaseUser.getPhotoUrl().toString();
-                            User user = new User(email,userID,userName,photoUrl,"user");
+                            User user = new User(email, userID, userName, photoUrl, "user");
+
                             // Add user to firestore
                             DocumentReference userRef = db.collection("users").document(userID);
                             userRef.get().addOnSuccessListener(command -> {
@@ -237,12 +233,12 @@ public class RegisterActivity extends AppCompatActivity {
                                     userRef.set(user);
                                 }
                             });
+
                             // Save data to local preference
-                            if (DataLocalManager.getUser() == null) {
-                                DataLocalManager.setUser(user);
-                            }
+                            DataLocalManager.setUser(user);
+
                             // Go to DrawerActivity
-                            ActivityHelper.sendDataToNextActivity("user", user, RegisterActivity.this, DrawerActivity.class);
+                            ActivityHelper.moveToNextActivity(RegisterActivity.this, DrawerActivity.class);
                         }
                     }
                 });

@@ -37,10 +37,18 @@ import com.observers.ecosentry_mobile.models.node.Node;
 import com.observers.ecosentry_mobile.models.station.Station;
 
 public class HomeFragment extends Fragment implements OnMapReadyCallback {
+
+    // ================================
+    // == Fields
+    // ================================
     private GoogleMap mMap;
     private ActivityMapsBinding binding;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private CollectionReference stationsRef = db.collection("stations");
+
+    // ================================
+    // == Life Cycle
+    // ================================
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -77,8 +85,12 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
             }
         });
     }
+
+    // ================================
+    // == Methods
+    // ================================
     public void markStation(Station station) {
-        Drawable vectorDrawable = AppCompatResources.getDrawable(getContext(),R.drawable.baseline_wifi_24);
+        Drawable vectorDrawable = AppCompatResources.getDrawable(getContext(), R.drawable.baseline_wifi_24);
         Bitmap bitmap = Bitmap.createBitmap(vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         vectorDrawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
@@ -87,33 +99,35 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
         GeoPoint stationGeo = station.getGeopoint();
         double stationLatitude = stationGeo.getLatitude();
-        double stationLongtitude = stationGeo.getLongitude();
-        LatLng stationMarker = new LatLng(stationLatitude,stationLongtitude);
+        double stationLongitude = stationGeo.getLongitude();
+        LatLng stationMarker = new LatLng(stationLatitude, stationLongitude);
         mMap.addMarker(new MarkerOptions().position(stationMarker)
                 .title(station.getLocation()).icon(icon));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(stationMarker));
     }
-    public void markNodes (CollectionReference nodesRef) {
+
+    public void markNodes(CollectionReference nodesRef) {
         nodesRef.get().addOnSuccessListener(queryDocumentSnapshots -> {
             for (QueryDocumentSnapshot snapshot : queryDocumentSnapshots) {
                 Node node = snapshot.toObject(Node.class);
                 GeoPoint nodeGeo = node.getGeopoint();
                 double nodeLatitude = nodeGeo.getLatitude();
-                double nodeLongtitude = nodeGeo.getLongitude();
-                LatLng nodeMarker = new LatLng(nodeLatitude,nodeLongtitude);
+                double nodeLongitude = nodeGeo.getLongitude();
+                LatLng nodeMarker = new LatLng(nodeLatitude, nodeLongitude);
                 mMap.addMarker(new MarkerOptions().position(nodeMarker)
                         .title(node.getName()));
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(nodeMarker,14));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(nodeMarker, 14));
             }
         });
     }
-    public String getData(Node node) {
-        String data = "Temperature: " + node.getTemperature()
-                + " Humidity: " + node.getHumidity()
-                + "\nSoil moisture: " + node.getSoil_moisture()
-                + " Dust: " + node.getDust()
-                + "\nRainfall: " + node.getRain()
-                + " CO: " + node.getCo();
-        return data;
-    }
+
+//    public String getData(Node node) {
+//        String data = "Temperature: " + node.getTemperature()
+//                + " Humidity: " + node.getHumidity()
+//                + "\nSoil moisture: " + node.getSoil_moisture()
+//                + " Dust: " + node.getDust()
+//                + "\nRainfall: " + node.getRain()
+//                + " CO: " + node.getCo();
+//        return data;
+//    }
 }

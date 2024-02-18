@@ -1,5 +1,6 @@
 package com.observers.ecosentry_mobile.controllers.drawer.fragments.home;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 
 import android.os.Bundle;
@@ -14,9 +15,15 @@ import com.observers.ecosentry_mobile.databinding.ActivityMapsBinding;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
+    // ================================
+    // == Fields
+    // ================================
     private GoogleMap mMap;
     private ActivityMapsBinding binding;
 
+    // ================================
+    // == Life Cycle
+    // ================================
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +47,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      * installed Google Play services and returned to the app.
      */
     @Override
-    public void onMapReady(GoogleMap googleMap) {
+    public void onMapReady(@NonNull GoogleMap googleMap) {
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera

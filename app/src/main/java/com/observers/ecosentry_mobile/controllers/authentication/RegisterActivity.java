@@ -53,7 +53,7 @@ public class RegisterActivity extends AppCompatActivity {
         mTextInputEditTextUserNameRegister = findViewById(R.id.textInputEditUserNameRegister);
         mButtonNormalRegister = findViewById(R.id.buttonNormalRegister);
 
-        // Set up link ack to login activity
+        // Set up link to login activity
         setUpLinkToLoginActivity();
 
         // Set Listeners
@@ -69,6 +69,8 @@ public class RegisterActivity extends AppCompatActivity {
      * A function to custom color the link and set up link to login
      */
     public void setUpLinkToLoginActivity() {
+
+        // Custom Link
         mTextViewLoginNowRegister = findViewById(R.id.textViewLoginNowRegister);
         SpannableString text = new SpannableString(mTextViewLoginNowRegister.getText());
         int colorID = ContextCompat.getColor(this, R.color.green600);
@@ -111,12 +113,12 @@ public class RegisterActivity extends AppCompatActivity {
 
                         // FIXME: After register sucesfully, go to Login Activity
                         Toast.makeText(RegisterActivity.this, "Register Successfully", Toast.LENGTH_LONG).show();
-                        ActivityHelper.moveToNextActivity(RegisterActivity.this, DrawerActivity.class, null);
+                        ActivityHelper.moveToNextActivity(RegisterActivity.this, LoginActivity.class, null);
 
                     }
                 } else {
                     // If fail, showing toast
-                    Toast.makeText(RegisterActivity.this, "Please enter all fields.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(RegisterActivity.this, "Please enter all fields", Toast.LENGTH_LONG).show();
                 }
 
                 // Clear the text of input;
@@ -129,7 +131,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     /**
-     * FIXME: Setup Register using Firebase Authentication (OAuthn)
+     * FIXME: Setup Register using Firebase Authentication (OAuth)
      */
     public View.OnClickListener setUpButtonGoogleRegister() {
         return new View.OnClickListener() {
@@ -137,8 +139,8 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // FIXME: Put your google authentication code in here
 
-                // FIXME: After register sucesfully, go to Login Activity
-                ActivityHelper.moveToNextActivity(RegisterActivity.this, DrawerActivity.class, null);
+                // FIXME: Remember to add this code after register sucesfully, go to Login Activity
+                ActivityHelper.moveToNextActivity(RegisterActivity.this, LoginActivity.class, null);
             }
         };
     }

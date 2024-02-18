@@ -188,7 +188,7 @@ public class LoginActivity extends AppCompatActivity {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // FIXME: Put your google authentication code in here
+                // FIXME: If success, do the firebase authentication here
 
 
                 // FIXME: After login successful, do the following

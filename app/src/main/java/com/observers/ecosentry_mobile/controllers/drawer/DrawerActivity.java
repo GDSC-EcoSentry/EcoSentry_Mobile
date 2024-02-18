@@ -21,10 +21,13 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.android.material.navigation.NavigationView;
 import com.observers.ecosentry_mobile.R;
+import com.observers.ecosentry_mobile.controllers.authentication.LoginActivity;
 import com.observers.ecosentry_mobile.controllers.drawer.fragments.dashboard.DashboardFragment;
 import com.observers.ecosentry_mobile.controllers.drawer.fragments.home.HomeFragment;
 import com.observers.ecosentry_mobile.controllers.drawer.fragments.profile.ProfileFragment;
 import com.observers.ecosentry_mobile.models.user.User;
+import com.observers.ecosentry_mobile.utils.ActivityHelper;
+import com.observers.ecosentry_mobile.utils.shared.DataLocalManager;
 
 import java.net.URI;
 import java.util.zip.Inflater;
@@ -105,6 +108,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
      * Setup Navigation Drawer
      */
     private void setUpDrawerNavigation() {
+        // Setup Navigation View
         mNavigationView = findViewById(R.id.navigation_view);
         mNavigationView.setNavigationItemSelectedListener(this);
 
@@ -113,16 +117,17 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
         mCircleImageView = headerView.findViewById(R.id.circleImageViewProfileDrawer);
         mUserName = headerView.findViewById(R.id.textViewUserNameDrawer);
 
-        // Get data from login
-        Intent intent = getIntent();
-        User user = (User) intent.getSerializableExtra("user");
+        // Get data after login from SharedPreference
+        User user = DataLocalManager.getUser();
 
-        // Using glide to load image from url
-        Glide.with(DrawerActivity.this).load(user.getPhotoURL())
-                .into(mCircleImageView);
+        if (user != null) {
+            Glide.with(DrawerActivity.this).load(user.getPhotoURL())
+                    .into(mCircleImageView);
 
-        // Set User Name
-        mUserName.setText(user.getUsername());
+            mUserName.setText(user.getUsername());
+        } else {
+            ActivityHelper.moveToNextActivity(DrawerActivity.this, LoginActivity.class, null);
+        }
     }
 
     /**

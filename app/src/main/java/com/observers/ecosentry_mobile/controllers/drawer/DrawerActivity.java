@@ -16,6 +16,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.navigation.NavigationView;
@@ -94,6 +95,19 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_items_toolbar, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.logOutItemToolbar) {
+
+            // Delete user and send to Activity
+            DataLocalManager.setUser(null);
+            ActivityHelper.moveToNextActivity(DrawerActivity.this, LoginActivity.class, null);
+            this.finish();
+            
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     /**

@@ -54,4 +54,7 @@
     <string name="drawer_nav_open">Open the Navigation Drawer</string>
     <string name="drawer_nav_close">Close the Navigation Drawer</string>
 
+    <!-- Toolbar -->
+    <string name="toolbar_item_signout">Sign Out</string>
+
 </resources>

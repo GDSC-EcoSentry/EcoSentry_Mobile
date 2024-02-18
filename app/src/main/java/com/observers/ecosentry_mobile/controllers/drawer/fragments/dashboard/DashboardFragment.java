@@ -60,7 +60,7 @@ public class DashboardFragment extends Fragment {
         // Setup Node Adapter
         mNodeAdapter = new NodeAdapter(getContext());
 
-        // Get Async Data from Fire Store
+        // Get First Async Data from Fire Store
         DemoData.getNodes("1", new IDataFetchCallback() {
             @Override
             public void onDataFetched(TreeMap nodes) {
@@ -89,7 +89,7 @@ public class DashboardFragment extends Fragment {
     // ================================
 
     /**
-     * FIXME: When clicking the station, might be you should get nodes based on the station
+     * When clicking the station, might be you should get nodes based on the station
      *
      * @param view: a view containing this dropdown
      */
@@ -122,7 +122,7 @@ public class DashboardFragment extends Fragment {
  * FIXME: Will move to separate class after done testing
  */
 class DemoData {
-    private static FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private final static FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     /**
      * A function to test for dropdown stations
@@ -185,7 +185,7 @@ class DemoData {
                 .document(stationID)
                 .collection("nodes");
         nodesRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            TreeMap<String, Node> list = new TreeMap<>();
+            final TreeMap<String, Node> list = new TreeMap<>();
 
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {

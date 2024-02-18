@@ -13,6 +13,7 @@ public class User implements Serializable {
     private String email;
     private String firstName;
     private String lastName;
+    private String phone;
     private String photoURL;
     private String role;
     private String uid;
@@ -120,5 +121,13 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

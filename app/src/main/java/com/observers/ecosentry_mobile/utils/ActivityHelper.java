@@ -18,7 +18,7 @@ public abstract class ActivityHelper {
     /**
      * Generic function to pass data to another activity
      */
-    public static void moveToNextActivity(Activity currActivity, Class desActivity, Map<String, Object> dataMap) {
+    public static void moveToNextActivity(Context currActivity, Class desActivity, Map<String, Object> dataMap) {
         Intent intent = new Intent(currActivity, desActivity);
 
         if (dataMap != null && !dataMap.isEmpty()) {
@@ -53,7 +53,7 @@ public abstract class ActivityHelper {
      * @param desAcc
      * @param <T>
      */
-    public static <T> void sendDataToNextActivity(String key, T user, Activity currAcc, Class desAcc) {
+    public static <T> void sendDataToNextActivity(String key, T user, Context currAcc, Class desAcc) {
         Map<String, Object> data = new HashMap<>();
         data.put(key, user);
         ActivityHelper.moveToNextActivity(currAcc, desAcc, data);

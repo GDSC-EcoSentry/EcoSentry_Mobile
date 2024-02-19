@@ -7,7 +7,7 @@ import java.util.HashMap;
 public class NodeThreshold {
 
     /**
-     * Get Color
+     * Get Color based on thresshold
      *
      * @param data
      * @param th_1

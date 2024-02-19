@@ -39,7 +39,6 @@ public class ProfileFragment extends Fragment {
             mTextInputEditTextAddressProfile;
     private MaterialButton mButtonSaveProfile;
     private FirebaseFirestore db;
-
     private User user;
 
     // ======================
@@ -71,11 +70,12 @@ public class ProfileFragment extends Fragment {
         if (user != null) {
             setCurrentUserOnAppToViews(user);
         } else {
-            ActivityHelper.moveToNextActivity(view.getContext(), LoginActivity.class, null);
+            ActivityHelper.moveToNextActivity(view.getContext(), LoginActivity.class);
         }
 
         // Setup Listeners
         mButtonSaveProfile.setOnClickListener(saveEditedUser());
+
         // Setup Firebase Firestore
         db = FirebaseFirestore.getInstance();
     }
@@ -85,7 +85,7 @@ public class ProfileFragment extends Fragment {
     // ======================
 
     /**
-     * Attach current user infor to corresponding views
+     * Attach current user info to corresponding views
      *
      * @param user: user object in store preference
      */
@@ -93,6 +93,7 @@ public class ProfileFragment extends Fragment {
 
         // Using glide to load image from url
         Glide.with(ProfileFragment.this).load(user.getPhotoURL())
+                .placeholder(R.drawable.baseline_person_24)
                 .into(mCircleImageViewProfileProfile);
 
         // Add content from User object
@@ -116,11 +117,11 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
 
                 // Get user from views
-                String username = mTextInputEditTextUserNameProfile.getText().toString();
-                String firstName = mTextInputEditTextFirstNameProfile.getText().toString();
-                String lastName = mTextInputEditTextLastNameProfile.getText().toString();
-                String phone = mTextInputEditTextPhoneProfile.getText().toString();
-                String address = mTextInputEditTextAddressProfile.getText().toString();
+                String username = String.valueOf(mTextInputEditTextUserNameProfile.getText());
+                String firstName = String.valueOf(mTextInputEditTextFirstNameProfile.getText());
+                String lastName = String.valueOf(mTextInputEditTextLastNameProfile.getText());
+                String phone = String.valueOf(mTextInputEditTextPhoneProfile.getText());
+                String address = String.valueOf(mTextInputEditTextAddressProfile.getText());
                 user.setUsername(username);
                 user.setFirstName(firstName);
                 user.setLastName(lastName);
@@ -136,12 +137,17 @@ public class ProfileFragment extends Fragment {
         };
     }
 
+    /**
+     * Update User to the Fire Store
+     *
+     * @param user
+     */
     public void updateUser(User user) {
         DocumentReference userRef = db.collection("users")
                 .document(user.getUid());
         userRef.set(user).addOnSuccessListener(success -> {
-            // Notify User to save sucessfully
-            Toast.makeText(getContext(), "Save User Sucessfully", Toast.LENGTH_LONG).show();
+            // Notify User to save successfully
+            Toast.makeText(getContext(), "Save User Successfully", Toast.LENGTH_LONG).show();
         });
     }
 }

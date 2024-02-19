@@ -5,16 +5,14 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-import android.app.Application;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.View;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -35,7 +33,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -44,11 +41,6 @@ import com.observers.ecosentry_mobile.controllers.drawer.DrawerActivity;
 import com.observers.ecosentry_mobile.models.user.User;
 import com.observers.ecosentry_mobile.utils.ActivityHelper;
 import com.observers.ecosentry_mobile.utils.shared.DataLocalManager;
-
-import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.BiConsumer;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -88,18 +80,17 @@ public class LoginActivity extends AppCompatActivity {
         mButtonNormalLogin.setOnClickListener(setUpButtonNormalLogin());
         mButtonGoogleLogin.setOnClickListener(setUpButtonGoogleLogin());
 
-        // Setup Firebase Firestore
+        // Setup Firebase FireStore
         db = FirebaseFirestore.getInstance();
 
         // Setup FirebaseAuth
         firebaseAuth = FirebaseAuth.getInstance();
 
-        // Setup the Google sign-in proccess
+        // Setup the Google sign-in process
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail().build();
-        mGoogleSignInClient = GoogleSignIn.getClient(this,gso);
-
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
     }
 
     @Override
@@ -112,7 +103,7 @@ public class LoginActivity extends AppCompatActivity {
                 firebaseAuth(account.getIdToken());
 
             } catch (Exception e) {
-                Toast.makeText(this,e.getMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -161,7 +152,7 @@ public class LoginActivity extends AppCompatActivity {
         // If user in local storage, retrieve form it
         User user = DataLocalManager.getUser();
         if (user != null) {
-            ActivityHelper.sendDataToNextActivity("user", user, LoginActivity.this, DrawerActivity.class);
+            ActivityHelper.moveToNextActivity(LoginActivity.this, DrawerActivity.class);
         }
     }
     // ======================
@@ -182,7 +173,7 @@ public class LoginActivity extends AppCompatActivity {
         mTextViewRegisterNowLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ActivityHelper.moveToNextActivity(LoginActivity.this, RegisterActivity.class, null);
+                ActivityHelper.moveToNextActivity(LoginActivity.this, RegisterActivity.class);
             }
         });
     }
@@ -200,7 +191,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
                     // If success, do the firebase authentication here
-                    firebaseAuth.signInWithEmailAndPassword(email,password)
+                    firebaseAuth.signInWithEmailAndPassword(email, password)
                             .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                                 @Override
                                 public void onSuccess(AuthResult authResult) {
@@ -210,11 +201,10 @@ public class LoginActivity extends AppCompatActivity {
                                     userRef.get().addOnSuccessListener(documentSnapshot -> {
                                         user = documentSnapshot.toObject(User.class);
                                         // Save data to local preference
-                                        if (DataLocalManager.getUser() == null) {
-                                            DataLocalManager.setUser(user);
-                                        }
+                                        DataLocalManager.setUser(user);
+
                                         // Go to DrawerActivity
-                                        ActivityHelper.sendDataToNextActivity("user", user, LoginActivity.this, DrawerActivity.class);
+                                        ActivityHelper.moveToNextActivity(LoginActivity.this, DrawerActivity.class);
                                     });
                                 }
                             })
@@ -245,20 +235,23 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Retrieve sign-in intent and start sign-in activity
                 Intent intent = mGoogleSignInClient.getSignInIntent();
-                startActivityForResult(intent,RC_SIGN_IN);
+                startActivityForResult(intent, RC_SIGN_IN);
             }
         };
     }
+
     /**
-    Authenticates the user with Firebase using the provided ID token.
+     * Authenticates the user with Firebase using the provided ID token.
      */
     public void firebaseAuth(String idToken) {
-        AuthCredential credential = GoogleAuthProvider.getCredential(idToken,null);
+        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         firebaseAuth.signInWithCredential(credential)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+
+                            // Get User from FireStore
                             FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
                             String uid = firebaseUser.getUid();
                             // Check user whether exists in Firestore or not
@@ -271,14 +264,13 @@ public class LoginActivity extends AppCompatActivity {
                                     String userID = firebaseUser.getUid();
                                     String userName = firebaseUser.getDisplayName();
                                     String photoUrl = firebaseUser.getPhotoUrl().toString();
-                                    User user = new User(email,userID,userName,photoUrl,"user");
-                                }
-                                // Save data to local preference
-                                if (DataLocalManager.getUser() == null) {
+                                    User user = new User(email, userID, userName, photoUrl, "user");
+                                    // Save data to local preference
                                     DataLocalManager.setUser(user);
+
+                                    // Go to DrawerActivity
+                                    ActivityHelper.moveToNextActivity(LoginActivity.this, DrawerActivity.class);
                                 }
-                                // Go to DrawerActivity
-                                ActivityHelper.sendDataToNextActivity("user", user, LoginActivity.this, DrawerActivity.class);
                             });
                         }
                     }

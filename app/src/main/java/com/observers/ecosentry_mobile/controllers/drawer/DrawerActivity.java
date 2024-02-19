@@ -3,7 +3,6 @@ package com.observers.ecosentry_mobile.controllers.drawer;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.content.res.AppCompatResources;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -16,7 +15,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.navigation.NavigationView;
@@ -103,9 +101,8 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
 
             // Delete user and send to Activity
             DataLocalManager.setUser(null);
-            ActivityHelper.moveToNextActivity(DrawerActivity.this, LoginActivity.class, null);
+            ActivityHelper.moveToNextActivity(DrawerActivity.this, LoginActivity.class);
             this.finish();
-            
         }
         return super.onOptionsItemSelected(item);
     }
@@ -139,11 +136,12 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
 
         if (user != null) {
             Glide.with(DrawerActivity.this).load(user.getPhotoURL())
+                    .placeholder(R.drawable.ic_profile_24)
                     .into(mCircleImageView);
-
             mUserName.setText(user.getUsername());
+
         } else {
-            ActivityHelper.moveToNextActivity(DrawerActivity.this, LoginActivity.class, null);
+            ActivityHelper.moveToNextActivityWithData(DrawerActivity.this, LoginActivity.class, null);
         }
     }
 

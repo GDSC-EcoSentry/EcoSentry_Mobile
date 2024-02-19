@@ -250,10 +250,10 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-
                             // Get User from FireStore
                             FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
                             String uid = firebaseUser.getUid();
+                            System.out.println(firebaseUser.getDisplayName());
                             // Check user whether exists in Firestore or not
                             DocumentReference userRef = db.collection("users").document(uid);
                             userRef.get().addOnSuccessListener(documentSnapshot -> {
@@ -264,13 +264,12 @@ public class LoginActivity extends AppCompatActivity {
                                     String userID = firebaseUser.getUid();
                                     String userName = firebaseUser.getDisplayName();
                                     String photoUrl = firebaseUser.getPhotoUrl().toString();
-                                    User user = new User(email, userID, userName, photoUrl, "user");
-                                    // Save data to local preference
-                                    DataLocalManager.setUser(user);
-
-                                    // Go to DrawerActivity
-                                    ActivityHelper.moveToNextActivity(LoginActivity.this, DrawerActivity.class);
+                                    user = new User(email, userID, userName, photoUrl, "user");
                                 }
+                                // Save data to local preference
+                                DataLocalManager.setUser(user);
+                                // Go to DrawerActivity
+                                ActivityHelper.moveToNextActivity(LoginActivity.this, DrawerActivity.class);
                             });
                         }
                     }

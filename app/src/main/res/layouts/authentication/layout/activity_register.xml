@@ -12,28 +12,27 @@
         android:layout_height="wrap_content"
         android:clipToPadding="false"
         android:orientation="vertical"
-        android:padding="32dp"
+        android:paddingLeft="32dp"
+        android:paddingTop="12dp"
+        android:paddingRight="32dp"
+        android:paddingBottom="32dp"
         android:scrollbars="horizontal">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="148dp"
-            android:layout_height="148dp"
+            android:layout_width="112dp"
+            android:layout_height="112dp"
             android:layout_gravity="center_horizontal"
-            android:scaleType="centerInside"
-            android:src="@drawable/logo"
-            app:civ_circle_background_color="@color/white" />
+            android:src="@drawable/logo" />
 
         <!-- Login Form -->
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="12dp"
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="22dp"
             app:cardElevation="18dp"
-            app:cardPreventCornerOverlap="true"
-            app:strokeColor="@android:color/darker_gray"
-            app:strokeWidth="0.5sp">
+            app:cardPreventCornerOverlap="true">
 
             <LinearLayout
                 android:layout_width="match_parent"

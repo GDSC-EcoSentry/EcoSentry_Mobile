@@ -146,7 +146,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
             mUserName.setText(user.getUsername());
 
         } else {
-            ActivityHelper.moveToNextActivityWithData(DrawerActivity.this, LoginActivity.class, null);
+            ActivityHelper.moveToNextActivity(DrawerActivity.this, LoginActivity.class);
         }
     }
 

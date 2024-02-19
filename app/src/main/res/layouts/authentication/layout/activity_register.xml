@@ -16,11 +16,10 @@
         android:scrollbars="horizontal">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="112dp"
-            android:layout_height="112dp"
+            android:layout_width="148dp"
+            android:layout_height="148dp"
             android:layout_gravity="center_horizontal"
-            android:cropToPadding="false"
-            android:elevation="16dp"
+            android:scaleType="centerInside"
             android:src="@drawable/logo"
             app:civ_circle_background_color="@color/white" />
 

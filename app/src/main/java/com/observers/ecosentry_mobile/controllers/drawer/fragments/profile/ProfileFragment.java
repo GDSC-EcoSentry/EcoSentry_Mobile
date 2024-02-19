@@ -93,7 +93,7 @@ public class ProfileFragment extends Fragment {
 
         // Using glide to load image from url
         Glide.with(ProfileFragment.this).load(user.getPhotoURL())
-                .placeholder(R.drawable.baseline_person_24)
+                .placeholder(R.drawable.ic_profile_24)
                 .into(mCircleImageViewProfileProfile);
 
         // Add content from User object

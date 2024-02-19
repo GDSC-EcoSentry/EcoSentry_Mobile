@@ -3,12 +3,12 @@
     <color name="black">#0a0a0a</color>
     <color name="white">#FEFEFE</color>
 
+    <color name="green200">#bbf7d0</color>
     <color name="green600">#059669</color>
     <color name="green800">#166534</color>
 
-    <color name="pink">#E5C4C5</color>
-    <color name="yellow">#FDF2DF</color>
-    <color name="green200">#bbf7d0</color>
+    <color name="red500">#ef4444</color>
+    <color name="yellow500">#f59e0b</color>
 
     <color name="ic_launcher_background">#E7E5E4</color>
 </resources>

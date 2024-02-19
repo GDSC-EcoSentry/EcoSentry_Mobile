@@ -30,6 +30,52 @@ public class NodeAdapter extends RecyclerView.Adapter<NodeAdapter.NodeViewHolder
         notifyDataSetChanged(); // Notify if the DataSet data has changed
     }
 
+    //    Khánh Lê
+//    tempThreshold = {
+//        '0': {color: '#2d9399'},
+//        '30': {color: 'orange'},
+//        '40': {color: 'red'}
+//    };
+//
+//    humidityThreshold = {
+//        '0': {color: 'red'},
+//        '30': {color: '#37ae83'},
+//        '90': {color: 'orange'}
+//    };
+//
+//    soilMoistThreshold = {
+//        '0': {color: 'red'},
+//        '20': {color: 'orange'},
+//        '40': {color: '#9d4337'}
+//    };
+//
+//    coThreshold = {
+//        '0': {color: '#a68b41'},
+//        '5': {color: 'orange'},
+//        '10': {color: 'red'}
+//    };
+//
+//    rainThreshold = {
+//        '0': {color: '#0d6cdd'},
+//        '2': {color: 'orange'},
+//        '5': {color: 'red'}
+//    };
+//
+//    dustThreshold = {
+//        '0': {color: '#574103'},
+//        '20': {color: 'orange'},
+//        '30': {color: 'red'}
+//    };
+//    public String getNodeDangerLevel(Node node) {
+//
+//    }
+//
+//    public String getNotificationOnNode(Node node) {
+//
+//    }
+
+//    public int getColorThresholdOnNodeFields(float threshold_1, threshold_2,)
+
     // =====================================
     // == Methods From RecyclerView.Adapter
     // =====================================
@@ -56,13 +102,18 @@ public class NodeAdapter extends RecyclerView.Adapter<NodeAdapter.NodeViewHolder
             return;
         }
 
+        // Name
         holder.mTextViewName.setText(node.getName());
+
+        // Node Humidity
         holder.mTextViewHumidity.setText(String.format("%.1f", node.getHumidity()) + " %");
+//        if (node.getHumidity())
+
         holder.mTextViewSoilMoisture.setText(String.format("%.1f", node.getSoil_moisture()) + " %");
-        holder.mTextViewTemperature.setText(String.format("%.1f", node.getTemperature()));
+        holder.mTextViewTemperature.setText(String.format("%.1f", node.getTemperature()) + " \u2103");
         holder.mTextViewCO.setText(String.format("%.1f", node.getCo()) + " PPM");
         holder.mTextViewRainFall.setText(String.format("%.1f", node.getRain()) + " in/h");
-        holder.mTextViewDustParticle.setText(String.format("%.1f", node.getDust()) + "\u00B5g/m3");
+        holder.mTextViewDustParticle.setText(String.format("%.1f", node.getDust()) + " \u00B5g/m3");
 
         /**
          * TODO: Currently Setting Default Mode, Will implement algo later

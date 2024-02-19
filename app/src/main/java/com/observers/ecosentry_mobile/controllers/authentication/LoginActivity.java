@@ -37,6 +37,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.observers.ecosentry_mobile.R;
 import com.observers.ecosentry_mobile.controllers.drawer.DrawerActivity;
@@ -63,6 +64,7 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private GoogleSignInClient mGoogleSignInClient;
     private int RC_SIGN_IN = 20;
+    private User user;
 
     // ======================
     // == Life Cycle
@@ -202,16 +204,18 @@ public class LoginActivity extends AppCompatActivity {
                             .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                                 @Override
                                 public void onSuccess(AuthResult authResult) {
-                                    FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-                                    String email = firebaseUser.getEmail();
-                                    User user = new User();
-                                    user.setEmail(email);
-                                    // Save data to local preference
-                                    if (DataLocalManager.getUser() == null) {
-                                        DataLocalManager.setUser(user);
-                                    }
-                                    // Go to DrawerActivity
-                                    ActivityHelper.sendDataToNextActivity("user", user, LoginActivity.this, DrawerActivity.class);
+                                    FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+                                    String uid = currentUser.getUid();
+                                    DocumentReference userRef = db.collection("users").document(uid);
+                                    userRef.get().addOnSuccessListener(documentSnapshot -> {
+                                        user = documentSnapshot.toObject(User.class);
+                                        // Save data to local preference
+                                        if (DataLocalManager.getUser() == null) {
+                                            DataLocalManager.setUser(user);
+                                        }
+                                        // Go to DrawerActivity
+                                        ActivityHelper.sendDataToNextActivity("user", user, LoginActivity.this, DrawerActivity.class);
+                                    });
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {
@@ -256,24 +260,26 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-                            String email = firebaseUser.getEmail();
-                            String userID = firebaseUser.getUid();
-                            String userName = firebaseUser.getDisplayName();
-                            String photoUrl = firebaseUser.getPhotoUrl().toString();
-                            User user = new User(email,userID,userName,photoUrl,"user");
-                            // Add user to firestore
-                            DocumentReference userRef = db.collection("users").document(userID);
-                            userRef.get().addOnSuccessListener(command -> {
-                                if (!command.exists()) {
-                                    userRef.set(user);
+                            String uid = firebaseUser.getUid();
+                            // Check user whether exists in Firestore or not
+                            DocumentReference userRef = db.collection("users").document(uid);
+                            userRef.get().addOnSuccessListener(documentSnapshot -> {
+                                if (documentSnapshot.exists()) {
+                                    user = documentSnapshot.toObject(User.class);
+                                } else {
+                                    String email = firebaseUser.getEmail();
+                                    String userID = firebaseUser.getUid();
+                                    String userName = firebaseUser.getDisplayName();
+                                    String photoUrl = firebaseUser.getPhotoUrl().toString();
+                                    User user = new User(email,userID,userName,photoUrl,"user");
                                 }
+                                // Save data to local preference
+                                if (DataLocalManager.getUser() == null) {
+                                    DataLocalManager.setUser(user);
+                                }
+                                // Go to DrawerActivity
+                                ActivityHelper.sendDataToNextActivity("user", user, LoginActivity.this, DrawerActivity.class);
                             });
-                            // Save data to local preference
-                            if (DataLocalManager.getUser() == null) {
-                                DataLocalManager.setUser(user);
-                            }
-                            // Go to DrawerActivity
-                            ActivityHelper.sendDataToNextActivity("user", user, LoginActivity.this, DrawerActivity.class);
                         }
                     }
                 });

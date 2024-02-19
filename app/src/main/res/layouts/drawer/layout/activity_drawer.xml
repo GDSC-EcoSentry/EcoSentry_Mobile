@@ -31,9 +31,7 @@
                 app:navigationIconTint="@color/white"
                 app:popupTheme="?attr/actionBarPopupTheme"
                 app:subtitle="EcoSentry"
-                app:subtitleCentered="true"
                 app:subtitleTextColor="@color/white"
-                app:titleCentered="true"
                 app:titleTextColor="@color/white" />
         </com.google.android.material.appbar.AppBarLayout>
 

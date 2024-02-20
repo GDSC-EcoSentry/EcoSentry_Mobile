@@ -37,7 +37,7 @@ public abstract class NodeThreshold {
             {90, 70, 50},    // air humidity,   %
             {100, 60, 40},   // soil moisture,  %
             {350, 400, 500}, // co,             ppm
-            {20, 50, 70},       // rain fall,      mm/h
+            {20, 50, 70},    // rain fall,      % intensity
             {20, 50, 50}     // dust particle,  micro gram/m^3
     };
 
@@ -48,11 +48,12 @@ public abstract class NodeThreshold {
     static final double warningThreshold = 0.7;
 
     /**
-     * Indicate the important of the data
+     * Indicate the important of the data (temp, humid, soil, rain, co, dust)
      * The sum of all weights should be 1
+     *
      * e.g. Temp is far more important than air humidity
      */
-    private static final double[] weights = {0.5, 0.10, 0.2, 0.10, 0.05, 0.05};
+    private static final double[] weights = {0.3, 0.10, 0.2, 0.10, 0.25, 0.05};
 
     // ======================================================
     // == Danger Level Methods

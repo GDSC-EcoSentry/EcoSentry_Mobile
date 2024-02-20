@@ -62,7 +62,7 @@ public class DashboardFragment extends Fragment {
         mNodeAdapter = new NodeAdapter(getContext());
 
         // Get First Async Data from Fire Store
-        DemoData.getNodes("1", new IDataFetchCallback() {
+        DemoData.getNodes("HNRddJzHH91mKAvTDYFO", new IDataFetchCallback() {
             @Override
             public void onDataFetched(TreeMap nodes) {
                 if (nodes.size() != 0) {

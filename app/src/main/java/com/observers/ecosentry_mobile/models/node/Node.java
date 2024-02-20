@@ -19,7 +19,7 @@ public class Node implements Serializable {
     private double soil_moisture;
     private double temperature;
     private GeoPoint geopoint;
-    private Timestamp date;
+    private String date;
 
     // ======================
     // == Constructors
@@ -137,11 +137,11 @@ public class Node implements Serializable {
         this.geopoint = geopoint;
     }
 
-    public Timestamp getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Timestamp date) {
+    public void setDate(String date) {
         this.date = date;
     }
 }

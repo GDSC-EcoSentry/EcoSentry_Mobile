@@ -35,8 +35,8 @@
 
     <string name="dashboard_station_label_dropdown">Stations</string>
 
-    <string name="dashboard_node_label_in_danger">In Danger</string>
-    <string name="dashboard_node_label_on_safe">On Safe</string>
+    <string name="dashboard_node_label_danger">Danger</string>
+    <string name="dashboard_node_label_safe">Safe</string>
     <string name="dashboard_node_label_warning">Warning</string>
 
     <!-- Profile Activity -->
@@ -58,6 +58,11 @@
 
     <!-- Toolbar -->
     <string name="toolbar_item_signout">Sign Out</string>
+
+    <!-- Danger Level   -->
+    <string name="dashboard_danger_level_safe">Safe</string>
+    <string name="dashboard_danger_level_warning">Warning</string>
+    <string name="dashboard_danger_level_danger">Danger</string>
 
 
 </resources>

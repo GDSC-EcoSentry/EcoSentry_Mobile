@@ -90,7 +90,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     // == Methods
     // ================================
     public void markStation(Station station) {
-        Drawable vectorDrawable = AppCompatResources.getDrawable(getContext(), R.drawable.baseline_wifi_24);
+        Drawable vectorDrawable = AppCompatResources.getDrawable(getContext(), R.drawable.ic_wifi_24);
         Bitmap bitmap = Bitmap.createBitmap(vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         vectorDrawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());

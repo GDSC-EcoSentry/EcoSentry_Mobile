@@ -1,12 +1,16 @@
 package com.observers.ecosentry_mobile.models.node;
 
+import static com.observers.ecosentry_mobile.models.node.NodeThreshold.featuresThreshold;
+
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.observers.ecosentry_mobile.R;
@@ -56,18 +60,43 @@ public class NodeAdapter extends RecyclerView.Adapter<NodeAdapter.NodeViewHolder
             return;
         }
 
+        // Name
         holder.mTextViewName.setText(node.getName());
+
+        // Binding on Node Fields (Text + Color)
         holder.mTextViewHumidity.setText(String.format("%.1f", node.getHumidity()) + " %");
         holder.mTextViewSoilMoisture.setText(String.format("%.1f", node.getSoil_moisture()) + " %");
-        holder.mTextViewTemperature.setText(String.format("%.1f", node.getTemperature()));
+        holder.mTextViewTemperature.setText(String.format("%.1f", node.getTemperature()) + " \u2103");
         holder.mTextViewCO.setText(String.format("%.1f", node.getCo()) + " PPM");
-        holder.mTextViewRainFall.setText(String.format("%.1f", node.getRain()) + " in/h");
-        holder.mTextViewDustParticle.setText(String.format("%.1f", node.getDust()) + "\u00B5g/m3");
+        holder.mTextViewRainFall.setText(String.format("%.1f", node.getRain()) + " % intensity");
+        holder.mTextViewDustParticle.setText(String.format("%.1f", node.getDust()) + " \u00B5g/m3");
 
-        /**
-         * TODO: Currently Setting Default Mode, Will implement algo later
-         */
-        holder.mTextViewDangerLevel.setText(mContext.getResources().getString(R.string.dashboard_node_label_on_safe));
+        int colorTemp = NodeThreshold.getColorOnThresholdField(node.getTemperature(), featuresThreshold[0][0], featuresThreshold[0][1], featuresThreshold[0][2]);
+        int colorHumidity = NodeThreshold.getColorOnThresholdField(node.getHumidity(), featuresThreshold[0][0], featuresThreshold[0][1], featuresThreshold[0][2]);
+        int colorSoilMoisture = NodeThreshold.getColorOnThresholdField(node.getSoil_moisture(), featuresThreshold[0][0], featuresThreshold[0][1], featuresThreshold[0][2]);
+        int colorRainFall = NodeThreshold.getColorOnThresholdField(node.getRain(), featuresThreshold[0][0], featuresThreshold[0][1], featuresThreshold[0][2]);
+        int colorCO = NodeThreshold.getColorOnThresholdField(node.getCo(), featuresThreshold[0][0], featuresThreshold[0][1], featuresThreshold[0][2]);
+        int colorDustParticle = NodeThreshold.getColorOnThresholdField(node.getDust(), featuresThreshold[0][0], featuresThreshold[0][1], featuresThreshold[0][2]);
+
+        holder.mTextViewTemperature.setTextColor(ContextCompat.getColor(mContext, colorTemp));
+        holder.mTextViewHumidity.setTextColor(ContextCompat.getColor(mContext, colorHumidity));
+        holder.mTextViewSoilMoisture.setTextColor(ContextCompat.getColor(mContext, colorSoilMoisture));
+        holder.mTextViewRainFall.setTextColor(ContextCompat.getColor(mContext, colorRainFall));
+        holder.mTextViewCO.setTextColor(ContextCompat.getColor(mContext, colorCO));
+        holder.mTextViewDustParticle.setTextColor(ContextCompat.getColor(mContext, colorDustParticle));
+
+        // Binding on Node Danger Level (Text + Color)
+        double dangerLevel = NodeThreshold.computeDangerLevelData(node);
+        holder.mTextViewDangerLevel.setText(NodeThreshold.getTextOnThresholdDangerLevel(dangerLevel));
+
+        int colorDangerLevel = NodeThreshold.getColorOnThresholdDangerLevel(dangerLevel);
+        holder.mTextViewDangerLevel.setBackgroundColor(ContextCompat.getColor(mContext, colorDangerLevel));
+
+//        Log.i("Danger LEVEL", String.valueOf(dangerLevel));
+//        Log.i("Temperature COLOR get context", String.valueOf(ContextCompat.getColor(mContext, colorTemp)));
+//        Log.i("Temperature COLOR", String.valueOf(colorTemp));
+//        Log.i("Temperature VALUE", String.valueOf(node.getTemperature()));
+//        Log.i("Temperature SCALE", String.valueOf(NodeThreshold.normalizeFeature(node.getTemperature(), featuresThreshold[0][0], featuresThreshold[0][2])));
     }
 
     @Override

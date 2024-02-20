@@ -1,14 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="black">#0a0a0a</color>
-    <color name="white">#fff7ed</color>
+    <color name="white">#FEFEFE</color>
 
+    <color name="green200">#bbf7d0</color>
     <color name="green600">#059669</color>
     <color name="green800">#166534</color>
 
-    <color name="pink">#E5C4C5</color>
-    <color name="yellow">#FDF2DF</color>
-    <color name="green200">#bbf7d0</color>
+    <!-- Color Band on Node Fields    -->
+    <color name="node_low">#166534</color>
+    <color name="node_moderate">#fcd34d</color>
+    <color name="node_moderate_very">#b45309</color>
+    <color name="node_high">#dc2626</color>
+    <color name="node_high_very">#5b21b6</color>
+    <color name="node_hazardous">#86198f</color>
 
+    <!-- Color Band on Danger Level    -->
+    <color name="danger_level_safe">#166534</color>
+    <color name="danger_level_warning">#fcd34d</color>
+    <color name="danger_level_danger">#dc2626</color>
+
+    <!-- Color Band on Background -->
     <color name="ic_launcher_background">#E7E5E4</color>
 </resources>

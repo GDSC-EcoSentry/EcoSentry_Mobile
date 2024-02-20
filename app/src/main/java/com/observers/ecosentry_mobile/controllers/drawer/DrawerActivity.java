@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
 import com.observers.ecosentry_mobile.R;
 import com.observers.ecosentry_mobile.controllers.authentication.LoginActivity;
@@ -26,6 +27,8 @@ import com.observers.ecosentry_mobile.controllers.drawer.fragments.profile.Profi
 import com.observers.ecosentry_mobile.models.user.User;
 import com.observers.ecosentry_mobile.utils.ActivityHelper;
 import com.observers.ecosentry_mobile.utils.shared.DataLocalManager;
+
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -69,6 +72,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
         // Setting Home Fragment By Default
         replaceFragment(new HomeFragment());
         mNavigationView.getMenu().findItem(R.id.nav_home).setChecked(true);
+        getSupportActionBar().setTitle(R.string.home_header);
     }
 
     @Override
@@ -86,6 +90,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
     private void setUpToolbar() {
         mToolBar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolBar);
+
     }
 
     @Override
@@ -141,7 +146,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
             mUserName.setText(user.getUsername());
 
         } else {
-            ActivityHelper.moveToNextActivityWithData(DrawerActivity.this, LoginActivity.class, null);
+            ActivityHelper.moveToNextActivity(DrawerActivity.this, LoginActivity.class);
         }
     }
 
@@ -161,16 +166,19 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
             if (mCurrentFragment != FRAGMENT_HOME) {
                 replaceFragment(new HomeFragment());
                 mCurrentFragment = FRAGMENT_HOME;
+                Objects.requireNonNull(getSupportActionBar()).setTitle(R.string.home_header);
             }
         } else if (id == R.id.nav_dashboard) {
             if (mCurrentFragment != FRAGMENT_DASHBOARD) {
                 replaceFragment(new DashboardFragment());
                 mCurrentFragment = FRAGMENT_DASHBOARD;
+                Objects.requireNonNull(getSupportActionBar()).setTitle(R.string.dashboard_header);
             }
         } else if (id == R.id.nav_profile) {
             if (mCurrentFragment != FRAGMENT_PROFILE) {
                 replaceFragment(new ProfileFragment());
                 mCurrentFragment = FRAGMENT_PROFILE;
+                Objects.requireNonNull(getSupportActionBar()).setTitle(R.string.profile_header);
             }
         }
 

@@ -17,7 +17,8 @@
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:theme="@style/ThemeOverlay.AppCompat.Light">
+            android:fitsSystemWindows="true"
+            app:statusBarForeground="@color/white">
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar"
@@ -25,7 +26,9 @@
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/green800"
                 android:minHeight="?attr/actionBarSize"
+                android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
                 app:menu="@menu/menu_items_toolbar"
+                app:navigationIconTint="@color/white"
                 app:popupTheme="?attr/actionBarPopupTheme"
                 app:subtitle="EcoSentry"
                 app:subtitleTextColor="@color/white"

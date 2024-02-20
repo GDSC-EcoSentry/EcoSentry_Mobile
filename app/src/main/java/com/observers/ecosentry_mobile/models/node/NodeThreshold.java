@@ -33,12 +33,12 @@ public abstract class NodeThreshold {
      * http://www.bom.gov.au/weather-services/fire-weather-centre/bushfire-weather/index.shtml
      */
     public static final double[][] featuresThreshold = {
-            {15, 25, 35},    // temp,          'C
-            {90, 70, 50},    // air humidity,   %
-            {100, 60, 40},   // soil moisture,  %
-            {350, 400, 500}, // co,             ppm
-            {20, 50, 70},    // rain fall,      % intensity
-            {20, 50, 50}     // dust particle,  micro gram/m^3
+            {15, 25, 35},     // temp,          'C
+            {90, 70, 50},     // air humidity,   %
+            {90, 60, 40},     // soil moisture,  %
+            {70, 150, 200},   // co,             ppm
+            {20, 50, 70},     // rain fall,      % intensity
+            {35, 50, 150}     // dust particle,  micro gram/m^3
     };
 
     /**
@@ -53,7 +53,7 @@ public abstract class NodeThreshold {
      *
      * e.g. Temp is far more important than air humidity
      */
-    private static final double[] weights = {0.3, 0.10, 0.2, 0.10, 0.25, 0.05};
+    private static final double[] weights = {0.5, 0.10, 0.2, 0.10, 0.05, 0.05};
 
     // ======================================================
     // == Danger Level Methods

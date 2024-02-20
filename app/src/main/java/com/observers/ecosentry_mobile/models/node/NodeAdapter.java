@@ -68,7 +68,7 @@ public class NodeAdapter extends RecyclerView.Adapter<NodeAdapter.NodeViewHolder
         holder.mTextViewSoilMoisture.setText(String.format("%.1f", node.getSoil_moisture()) + " %");
         holder.mTextViewTemperature.setText(String.format("%.1f", node.getTemperature()) + " \u2103");
         holder.mTextViewCO.setText(String.format("%.1f", node.getCo()) + " PPM");
-        holder.mTextViewRainFall.setText(String.format("%.1f", node.getRain()) + " in/h");
+        holder.mTextViewRainFall.setText(String.format("%.1f", node.getRain()) + " % intensity");
         holder.mTextViewDustParticle.setText(String.format("%.1f", node.getDust()) + " \u00B5g/m3");
 
         int colorTemp = NodeThreshold.getColorOnThresholdField(node.getTemperature(), featuresThreshold[0][0], featuresThreshold[0][1], featuresThreshold[0][2]);

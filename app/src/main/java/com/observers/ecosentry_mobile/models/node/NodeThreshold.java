@@ -37,7 +37,7 @@ public abstract class NodeThreshold {
             {90, 70, 50},    // air humidity,   %
             {100, 60, 40},   // soil moisture,  %
             {350, 400, 500}, // co,             ppm
-            {5, 1, 0},       // rain fall,      mm/h
+            {20, 50, 70},       // rain fall,      mm/h
             {20, 50, 50}     // dust particle,  micro gram/m^3
     };
 

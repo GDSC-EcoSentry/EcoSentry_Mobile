@@ -265,6 +265,7 @@ public class LoginActivity extends AppCompatActivity {
                                     String userName = firebaseUser.getDisplayName();
                                     String photoUrl = firebaseUser.getPhotoUrl().toString();
                                     user = new User(email, userID, userName, photoUrl, "user");
+                                    userRef.set(user);
                                 }
                                 // Save data to local preference
                                 DataLocalManager.setUser(user);

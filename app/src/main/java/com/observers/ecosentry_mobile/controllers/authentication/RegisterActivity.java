@@ -235,13 +235,13 @@ public class RegisterActivity extends AppCompatActivity {
                                     String userID = firebaseUser.getUid();
                                     String userName = firebaseUser.getDisplayName();
                                     String photoUrl = firebaseUser.getPhotoUrl().toString();
-                                    User user = new User(email, userID, userName, photoUrl, "user");
-                                    // Save data to local preference
-                                    DataLocalManager.setUser(user);
-
-                                    // Go to DrawerActivity
-                                    ActivityHelper.moveToNextActivity(RegisterActivity.this, DrawerActivity.class);
+                                    user = new User(email, userID, userName, photoUrl, "user");
+                                    userRef.set(user);
                                 }
+                                // Save data to local preference
+                                DataLocalManager.setUser(user);
+                                // Go to DrawerActivity
+                                ActivityHelper.moveToNextActivity(RegisterActivity.this, DrawerActivity.class);
                             });
                         }
                     }

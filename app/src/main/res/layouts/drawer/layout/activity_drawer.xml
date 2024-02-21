@@ -17,15 +17,22 @@
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+            android:fitsSystemWindows="true"
+            app:statusBarForeground="@color/white">
 
-            <androidx.appcompat.widget.Toolbar
+            <com.google.android.material.appbar.MaterialToolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/green800"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
-
+                android:minHeight="?attr/actionBarSize"
+                android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+                app:menu="@menu/menu_items_toolbar"
+                app:navigationIconTint="@color/white"
+                app:popupTheme="?attr/actionBarPopupTheme"
+                app:subtitle="EcoSentry"
+                app:subtitleTextColor="@color/white"
+                app:titleTextColor="@color/white" />
         </com.google.android.material.appbar.AppBarLayout>
 
         <FrameLayout
@@ -42,5 +49,5 @@
         android:layout_gravity="start"
         android:background="@color/white"
         app:headerLayout="@layout/layout_drawer_header_navigation"
-        app:menu="@menu/menu_navigation" />
+        app:menu="@menu/menu_navigation_drawer" />
 </androidx.drawerlayout.widget.DrawerLayout>

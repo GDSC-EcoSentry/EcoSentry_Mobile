@@ -1,91 +1,33 @@
 {
   "project_info": {
-    "project_number": "199415820175",
-    "project_id": "authenticationdemo-6109c",
-    "storage_bucket": "authenticationdemo-6109c.appspot.com"
+    "project_number": "932877433187",
+    "project_id": "gdsc-ecosentry",
+    "storage_bucket": "gdsc-ecosentry.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:199415820175:android:bb805ea6a27ec1e63fe5fa",
-        "android_client_info": {
-          "package_name": "com.android.app.ecosentrydemo"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "199415820175-oa7hn15h7s2h838q8fq9e17974enh1rm.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyC7FiKngUO7Xh-SWDYhK9Q8yXb3Rew9YTk"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "199415820175-oa7hn15h7s2h838q8fq9e17974enh1rm.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:199415820175:android:2a76a68f2b493e163fe5fa",
-        "android_client_info": {
-          "package_name": "com.android.app.learning.ecosentry"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "199415820175-oa7hn15h7s2h838q8fq9e17974enh1rm.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyC7FiKngUO7Xh-SWDYhK9Q8yXb3Rew9YTk"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "199415820175-oa7hn15h7s2h838q8fq9e17974enh1rm.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:199415820175:android:f03c1dff07c6c2683fe5fa",
+        "mobilesdk_app_id": "1:932877433187:android:6695ca9df1689888c23b56",
         "android_client_info": {
           "package_name": "com.observers.ecosentry_mobile"
         }
       },
       "oauth_client": [
         {
-          "client_id": "199415820175-oa7hn15h7s2h838q8fq9e17974enh1rm.apps.googleusercontent.com",
+          "client_id": "932877433187-5qqc9pgekc30a5q5bjhqm0i6lvg5lpuk.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC7FiKngUO7Xh-SWDYhK9Q8yXb3Rew9YTk"
+          "current_key": "AIzaSyAAndfpGCDTlf50F5ZtCWWegSZ3oLS0AXw"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "199415820175-oa7hn15h7s2h838q8fq9e17974enh1rm.apps.googleusercontent.com",
+              "client_id": "932877433187-5qqc9pgekc30a5q5bjhqm0i6lvg5lpuk.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

@@ -3,22 +3,26 @@
 
     <!-- Login Activity -->
     <string name="login_header">Login to EcoSentry</string>
-    <string name="login_label_email">Email Address</string>
+    <string name="login_label_email">Email</string>
+    <string name="login_label_email_placeholder">abc@gmail.com</string>
     <string name="login_label_password">Password</string>
     <string name="login_label_button">Sign In</string>
+    <string name="login_label_line_middle_text">or</string>
     <string name="login_label_no_account">Don\'t have an account? Register Now</string>
+    <string name="default_web_client_id">AIzaSyBb5hJZuEjeivPft6cLSh4ig010IDnti4s</string>
 
     <!-- Register Activity -->
     <string name="register_header">Register to EcoSentry</string>
-    <string name="register_label_username">User Name</string>
-    <string name="register_label_email">Email Address</string>
+    <string name="register_label_username">Name</string>
+    <string name="register_label_email">Email</string>
     <string name="register_label_password">Password</string>
-    <string name="register_label_password_confirm">Password</string>
+    <string name="register_label_password_confirm">Confirm Password</string>
     <string name="register_label_button">Register an account</string>
     <string name="register_label_already_have_account">Already have an account? Sign in</string>
 
     <!-- Home Activity -->
     <string name="home_header">Home</string>
+    <string name="title_activity_maps">MapsActivity</string>
 
     <!-- Dashboard Activity -->
     <string name="dashboard_header">Dashboard</string>
@@ -31,18 +35,19 @@
 
     <string name="dashboard_station_label_dropdown">Stations</string>
 
-    <string name="dashboard_node_label_in_danger">In Danger</string>
-    <string name="dashboard_node_label_on_safe">On Safe</string>
+    <string name="dashboard_node_label_danger">Danger</string>
+    <string name="dashboard_node_label_safe">Safe</string>
     <string name="dashboard_node_label_warning">Warning</string>
 
     <!-- Profile Activity -->
     <string name="profile_header">Profile</string>
-    <string name="profile_label_username">Username</string>
+    <string name="profile_label_username">User Name</string>
     <string name="profile_label_firstname">First Name</string>
     <string name="profile_label_lastname">Last Name</string>
-    <string name="profile_label_phone_number">Phone Number</string>
+    <string name="profile_label_phone_number">Phone</string>
     <string name="profile_label_address">Address</string>
-    <string name="profile_label_button">Save</string>
+    <string name="profile_label_email">Email</string>
+    <string name="profile_label_button">Save Profile</string>
 
     <!-- Logout -->
     <string name="logout_label">Logout</string>
@@ -50,4 +55,14 @@
     <!-- Navigation Drawer -->
     <string name="drawer_nav_open">Open the Navigation Drawer</string>
     <string name="drawer_nav_close">Close the Navigation Drawer</string>
+
+    <!-- Toolbar -->
+    <string name="toolbar_item_signout">Sign Out</string>
+
+    <!-- Danger Level   -->
+    <string name="dashboard_danger_level_safe">Safe</string>
+    <string name="dashboard_danger_level_warning">Warning</string>
+    <string name="dashboard_danger_level_danger">Danger</string>
+
+
 </resources>

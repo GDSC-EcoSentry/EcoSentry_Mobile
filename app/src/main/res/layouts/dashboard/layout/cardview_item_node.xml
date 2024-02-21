@@ -36,7 +36,7 @@
             android:gravity="center"
             android:paddingTop="8dp"
             android:paddingBottom="8dp"
-            android:text="@string/dashboard_node_label_on_safe"
+            android:text="@string/dashboard_danger_level_safe"
             android:textSize="22sp"
             android:textStyle="bold" />
 
@@ -61,7 +61,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="4"
-                android:gravity="center"
+                android:gravity="end"
                 android:text="20'C"
                 android:textSize="22sp"
                 android:textStyle="bold" />
@@ -87,7 +87,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="4"
-                android:gravity="center"
+                android:gravity="end"
                 android:text="15%"
                 android:textSize="22sp"
                 android:textStyle="bold" />
@@ -113,7 +113,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="4"
-                android:gravity="center"
+                android:gravity="end"
                 android:text="20%"
                 android:textSize="22sp"
                 android:textStyle="bold" />
@@ -139,7 +139,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="4"
-                android:gravity="center"
+                android:gravity="end"
                 android:text="7 PPM"
                 android:textSize="22sp"
                 android:textStyle="bold" />
@@ -156,7 +156,7 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="6"
+                android:layout_weight="3"
                 android:text="@string/dashboard_node_label_rain_fall"
                 android:textSize="22sp" />
 
@@ -164,8 +164,8 @@
                 android:id="@+id/textViewNodeRainFall"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="4"
-                android:gravity="center"
+                android:layout_weight="7"
+                android:gravity="end"
                 android:text="3 in/h"
                 android:textSize="22sp"
                 android:textStyle="bold" />
@@ -191,7 +191,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="4"
-                android:gravity="center"
+                android:gravity="end"
                 android:text="8mg/m3"
                 android:textSize="22sp"
                 android:textStyle="bold" />

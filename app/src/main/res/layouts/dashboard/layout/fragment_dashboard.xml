@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="22dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="22dp"
         android:layout_marginEnd="22dp"
         android:hint="@string/dashboard_station_label_dropdown"
         app:boxBackgroundColor="@color/white"
@@ -38,9 +38,16 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Dashboard RecyclerView -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewDashboard"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:listitem="@layout/cardview_item_node" />
+        android:layout_height="match_parent"
+        android:layout_marginTop="22dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewDashboard"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/cardview_item_node" />
+    </FrameLayout>
+
 </LinearLayout>

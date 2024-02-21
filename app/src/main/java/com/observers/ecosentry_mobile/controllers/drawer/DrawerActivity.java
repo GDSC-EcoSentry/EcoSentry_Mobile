@@ -10,13 +10,27 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
 import com.observers.ecosentry_mobile.R;
+import com.observers.ecosentry_mobile.controllers.authentication.LoginActivity;
 import com.observers.ecosentry_mobile.controllers.drawer.fragments.dashboard.DashboardFragment;
 import com.observers.ecosentry_mobile.controllers.drawer.fragments.home.HomeFragment;
 import com.observers.ecosentry_mobile.controllers.drawer.fragments.profile.ProfileFragment;
+import com.observers.ecosentry_mobile.models.user.User;
+import com.observers.ecosentry_mobile.utils.ActivityHelper;
+import com.observers.ecosentry_mobile.utils.shared.DataLocalManager;
+
+import java.util.Objects;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class DrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -24,8 +38,10 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
     // == Fields
     // ================================
     private DrawerLayout mDrawerLayout;
-    private Toolbar mToolbar;
+    private Toolbar mToolBar;
     private NavigationView mNavigationView;
+    private CircleImageView mCircleImageView;
+    private TextView mUserName;
 
     /**
      * Fields for keep tabs in current fragment
@@ -51,11 +67,17 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
 
         // Drawer Navigation View Setup
         mCurrentFragment = FRAGMENT_HOME;
-        setUpNavigationDrawer();
+        setUpDrawerNavigation();
 
         // Setting Home Fragment By Default
         replaceFragment(new HomeFragment());
         mNavigationView.getMenu().findItem(R.id.nav_home).setChecked(true);
+        getSupportActionBar().setTitle(R.string.home_header);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
     }
 
     // ================================
@@ -66,8 +88,28 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
      * Setup Toolbar
      */
     private void setUpToolbar() {
-        mToolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(mToolbar);
+        mToolBar = findViewById(R.id.toolbar);
+        setSupportActionBar(mToolBar);
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_items_toolbar, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.logOutItemToolbar) {
+
+            // Delete user and send to Activity
+            DataLocalManager.setUser(null);
+            ActivityHelper.moveToNextActivity(DrawerActivity.this, LoginActivity.class);
+            this.finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -76,7 +118,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
     private void setUpDrawer() {
         mDrawerLayout = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,
-                mDrawerLayout, mToolbar, R.string.drawer_nav_open, R.string.drawer_nav_close);
+                mDrawerLayout, mToolBar, R.string.drawer_nav_open, R.string.drawer_nav_close);
         mDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
     }
@@ -84,9 +126,28 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
     /**
      * Setup Navigation Drawer
      */
-    private void setUpNavigationDrawer() {
+    private void setUpDrawerNavigation() {
+        // Setup Navigation View
         mNavigationView = findViewById(R.id.navigation_view);
         mNavigationView.setNavigationItemSelectedListener(this);
+
+        // Get image view and text view from header
+        View headerView = mNavigationView.getHeaderView(0);
+        mCircleImageView = headerView.findViewById(R.id.circleImageViewProfileDrawer);
+        mUserName = headerView.findViewById(R.id.textViewUserNameDrawer);
+
+        // Get data after login from SharedPreference
+        User user = DataLocalManager.getUser();
+
+        if (user != null) {
+            Glide.with(DrawerActivity.this).load(user.getPhotoURL())
+                    .placeholder(R.drawable.ic_profile_24)
+                    .into(mCircleImageView);
+            mUserName.setText(user.getUsername());
+
+        } else {
+            ActivityHelper.moveToNextActivity(DrawerActivity.this, LoginActivity.class);
+        }
     }
 
     /**
@@ -105,16 +166,19 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
             if (mCurrentFragment != FRAGMENT_HOME) {
                 replaceFragment(new HomeFragment());
                 mCurrentFragment = FRAGMENT_HOME;
+                Objects.requireNonNull(getSupportActionBar()).setTitle(R.string.home_header);
             }
         } else if (id == R.id.nav_dashboard) {
             if (mCurrentFragment != FRAGMENT_DASHBOARD) {
                 replaceFragment(new DashboardFragment());
                 mCurrentFragment = FRAGMENT_DASHBOARD;
+                Objects.requireNonNull(getSupportActionBar()).setTitle(R.string.dashboard_header);
             }
         } else if (id == R.id.nav_profile) {
             if (mCurrentFragment != FRAGMENT_PROFILE) {
                 replaceFragment(new ProfileFragment());
                 mCurrentFragment = FRAGMENT_PROFILE;
+                Objects.requireNonNull(getSupportActionBar()).setTitle(R.string.profile_header);
             }
         }
 

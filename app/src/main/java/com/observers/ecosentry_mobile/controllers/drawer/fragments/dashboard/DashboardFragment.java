@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,6 +30,7 @@ import com.observers.ecosentry_mobile.models.station.Station;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.TreeMap;
 
 public class DashboardFragment extends Fragment {
 
@@ -40,6 +40,7 @@ public class DashboardFragment extends Fragment {
     private MaterialAutoCompleteTextView mMaterialAutoCompleteTextView;
     private RecyclerView mRecyclerView;
     private NodeAdapter mNodeAdapter;
+    private TreeMap<String, Station> stationsList = new TreeMap<>();
 
     // ================================
     // == Life Cycle
@@ -49,7 +50,6 @@ public class DashboardFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_dashboard, container, false);
     }
-
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -61,19 +61,21 @@ public class DashboardFragment extends Fragment {
         // Setup Node Adapter
         mNodeAdapter = new NodeAdapter(getContext());
 
-        // Get Async Data from Fire Store
-        DemoData.getNodes(new DataFetchCallback() {
+        // Get First Async Data from Fire Store
+        DemoData.getNodes("HNRddJzHH91mKAvTDYFO", new IDataFetchCallback() {
             @Override
-            public void onDataFetched(ArrayList<Node> nodes) {
-                // Setup Node Adapter
+            public void onDataFetched(TreeMap nodes) {
                 if (nodes.size() != 0) {
-                    System.out.println("successsss");
-                    for (Node n : nodes) {
-                        System.out.println(n.toString());
+                    ArrayList<Node> list = new ArrayList<>();
+                    for (Object o : nodes.keySet()) {
+                        String nodeid = (String) o;
+                        //check log
+                        System.out.println(nodes.get(nodeid));
+                        list.add((Node) nodes.get(nodeid));
                     }
+                    // Setup Node Adapter
+                    mNodeAdapter.setData(list);
                 }
-
-                mNodeAdapter.setData(nodes);
             }
         });
 
@@ -88,27 +90,34 @@ public class DashboardFragment extends Fragment {
     // ================================
 
     /**
-     * FIXME: When clicking the station, might be you should get nodes based on the station
+     * When clicking the station, might be you should get nodes based on the station
      *
      * @param view: a view containing this dropdown
      */
     public void setUpDropdownTextView(@NonNull View view) {
-
-        // Convert list to String[] as the required parameter
-        String[] stations = DemoData.getFakeStations()
-                .parallelStream()
-                .map(Station::getName)
-                .toArray(String[]::new);
-
-        // Setup a list of stations
         mMaterialAutoCompleteTextView = view.findViewById(R.id.autoCompleteTextViewStation);
-        mMaterialAutoCompleteTextView.setSimpleItems(stations);
+
+        DemoData.getStations(list -> {
+            // Convert list to String[] as the required parameter
+            String[] stationsName = (String[]) list.keySet()
+                    .parallelStream()
+                    .toArray(String[]::new);
+            stationsList = list;
+            String[] stations = (String[]) list.keySet().stream().toArray(String[]::new);
+
+            // Setup a list of stations
+            mMaterialAutoCompleteTextView.setSimpleItems(stationsName);
+        });
 
         // Trigger get nodes when click a station
         mMaterialAutoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(parent.getContext(), "You just click me " + id, Toast.LENGTH_SHORT).show();
+                String stationName = (String) parent.getItemAtPosition(position);
+                String stationId = stationsList.get(stationName).getId();
+                DemoData.getNodes(stationId, nodes -> {
+                    mNodeAdapter.setData(new ArrayList<Node>(nodes.values()));
+                });
             }
         });
     }
@@ -119,6 +128,7 @@ public class DashboardFragment extends Fragment {
  * FIXME: Will move to separate class after done testing
  */
 class DemoData {
+    private final static FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     /**
      * A function to test for dropdown stations
@@ -134,13 +144,31 @@ class DemoData {
     }
 
     /**
+     * This function is used to get all stations from firestore
+     */
+    public static void getStations(IDataFetchCallback callback) {
+        CollectionReference stationsRef = db.collection("stations");
+        TreeMap<String, Station> stationsList = new TreeMap<>();
+        stationsRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                for (QueryDocumentSnapshot snapshot : queryDocumentSnapshots) {
+                    Station station = snapshot.toObject(Station.class);
+                    station.setId(snapshot.getId());
+                    stationsList.put(station.getName(), station);
+                }
+                callback.onDataFetched(stationsList);
+            }
+        });
+    }
+
+    /**
      * A function to test for recycler view layout
      *
      * @return list of fake nodes
      */
     public static ArrayList<Node> getFakeNodes() {
         ArrayList<Node> nodeArrayList = new ArrayList<>();
-
         for (int i = 1; i < 100; i++) {
             nodeArrayList.add(new Node("Node " + i,
                     new Random().nextDouble() * 100 + 1,
@@ -158,13 +186,13 @@ class DemoData {
      *
      * @param callback: a callback adding nodes to the Node Adapter
      */
-    public static void getNodes(DataFetchCallback callback) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        ArrayList<Node> list = new ArrayList<>();
+    public static void getNodes(String stationID, IDataFetchCallback callback) {
         CollectionReference nodesRef = db.collection("stations")
-                .document("1")
+                .document(stationID)
                 .collection("nodes");
         nodesRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            final TreeMap<String, Node> list = new TreeMap<>();
+
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 for (QueryDocumentSnapshot snapshot : queryDocumentSnapshots) {
@@ -179,7 +207,7 @@ class DemoData {
                             }
                             if (value != null && value.exists()) {
                                 node = value.toObject(Node.class);
-                                list.add(node);
+                                list.put(node.getName(), node);
                             }
 //                            if (list.size() == queryDocumentSnapshots.size()) {
 //                                callback.onDataFetched(list);

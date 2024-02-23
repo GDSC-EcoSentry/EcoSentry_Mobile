@@ -53,7 +53,7 @@ public abstract class NodeThreshold {
      *
      * e.g. Temp is far more important than air humidity
      */
-    private static final double[] weights = {0.5, 0.10, 0.2, 0.10, 0.05, 0.05};
+    private static final double[] weights = {0.4, 0.15, 0.25, 0.10, 0.05, 0.05};
 
     // ======================================================
     // == Danger Level Methods

